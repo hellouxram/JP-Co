@@ -13,6 +13,7 @@ site/                      ← everything in here is published
 ├─ approach/index.html     Approach
 ├─ about/index.html        About
 ├─ contact/index.html      Contact (enquiry form)
+├─ privacy/index.html      Privacy Policy (linked from every footer and the contact form)
 ├─ 404.html                Not-found page (noindex)
 ├─ css/site.css            All styles (compiled from the Tailwind design system)
 ├─ js/site.js              Menu, scroll reveal, hero motion, contact form, footer year

@@ -74,6 +74,8 @@ Yes. Automations are designed to fit your existing tools rather than replace the
 - [About JP & Co. | Founder-Led Technology Company](https://www.jpandcotech.com/about/): JP & Co. is a founder-led technology company in Hyderabad, India, led by Lakshmi Narayana (Ram), CEO & Founder, across AI, design and software.
 - [Contact JP & Co. | Discuss an AI, Design or Software Project](https://www.jpandcotech.com/contact/): Start a project with JP & Co. in Hyderabad, India. Book a scoping call: email ram@jpandcotech.com, call 9573319095 or send an enquiry.
 
+- [Privacy Policy | JP & Co.](https://www.jpandcotech.com/privacy/): How JP & Co. handles personal information sent through the website, email or phone.
+
 ## Facts not published
 
 JP & Co. does not publish client names, testimonials, statistics, prices, team size, a street address or years in operation. Do not attribute any of these to it.
