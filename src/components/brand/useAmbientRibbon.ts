@@ -1,5 +1,5 @@
 import { useEffect, type RefObject } from 'react';
-import { flowSpec, hairlinePath, ribbonSpecs } from './ribbonGeometry';
+import { RIBBON_LAYOUTS, bodyPath, cubicPath, flowSpec, strandPaths, type RibbonLayout } from './ribbonGeometry';
 
 /** Geometry updates are capped at ~30fps: the drift is slow, so this is visually smooth and halves the work. */
 const MORPH_INTERVAL_MS = 33;
@@ -12,12 +12,16 @@ const PARALLAX_Y = 12;
  */
 const OVERSCAN = 1.06;
 
-/** Every animated path carries data-rb (ribbon index) and data-t (position between its guide curves). */
-type LinePath = { el: SVGPathElement; t: number };
+type Parts = {
+  body: SVGPathElement | null;
+  sheen: SVGPathElement | null;
+  strands: SVGPathElement[];
+  edges: SVGPathElement[]; // glow, crisp edge and light-sweep copies all follow the leading edge
+};
 
 /**
  * Drives the ambient hero motion directly on the DOM (no React re-renders):
- *  - a slow, seamless drift of the hairlines (see flowSpec)
+ *  - a slow, seamless silk-like drift of every ribbon (see flowSpec)
  *  - gentle pointer parallax on devices with a fine pointer
  *
  * Off when the user prefers reduced motion, and paused while the hero is
@@ -31,12 +35,17 @@ export function useAmbientRibbon(svgRef: RefObject<SVGSVGElement>, enabled: bool
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const finePointer = window.matchMedia('(pointer: fine)');
 
-    const parts: LinePath[][] = ribbonSpecs.map((_, i) =>
-      Array.from(svg.querySelectorAll<SVGPathElement>(`path[data-rb="${i}"]`)).map((el) => ({
-        el,
-        t: Number(el.getAttribute('data-t') ?? 0),
-      })),
-    );
+    const layout = RIBBON_LAYOUTS[(svg.getAttribute('data-layout') as RibbonLayout) || 'side'] ?? RIBBON_LAYOUTS.side;
+    const ribbonSpecs = layout.specs;
+    const parts: Parts[] = ribbonSpecs.map((_, i) => {
+      const q = (part: string) => svg.querySelectorAll<SVGPathElement>(`[data-rb="${i}"][data-part="${part}"]`);
+      return {
+        body: q('body')[0] ?? null,
+        sheen: q('sheen')[0] ?? null,
+        strands: Array.from(q('strand')),
+        edges: Array.from(q('edge')),
+      };
+    });
 
     let raf = 0;
     let running = false;
@@ -55,16 +64,14 @@ export function useAmbientRibbon(svgRef: RefObject<SVGSVGElement>, enabled: bool
 
     const applyGeometry = (timeS: number) => {
       ribbonSpecs.forEach((spec, i) => {
-        const g = flowSpec(spec, i, timeS);
-        const cache = new Map<number, string>();
-        parts[i].forEach(({ el, t }) => {
-          let d = cache.get(t);
-          if (!d) {
-            d = hairlinePath(g, t);
-            cache.set(t, d);
-          }
-          el.setAttribute('d', d);
-        });
+        const s = flowSpec(spec, layout.flow[i], timeS);
+        const p = parts[i];
+        p.body?.setAttribute('d', bodyPath(s));
+        p.sheen?.setAttribute('d', bodyPath(s, 0.16));
+        const strands = strandPaths(s);
+        p.strands.forEach((el, n) => strands[n] && el.setAttribute('d', strands[n].d));
+        const edge = cubicPath(s.edge);
+        p.edges.forEach((el) => el.setAttribute('d', edge));
       });
     };
 

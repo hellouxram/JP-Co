@@ -22,16 +22,9 @@ export default function HomePage() {
         aria-labelledby="hero-title"
         className="surface-hero relative isolate overflow-hidden border-b border-line lg:flex lg:min-h-[min(54rem,calc(100svh_-_var(--header-height)))] lg:items-center"
       >
-        {/* Ribbon. Small screens: full-bleed behind the hero, faded in from transparent at the top so it
-            blends into the hero background (no visible box edge) and stays clear of the copy. Desktop: right-hand side. */}
-        <div
-          aria-hidden="true"
-          className={
-            'absolute inset-0 -z-10 overflow-hidden ' +
-            '[mask-image:linear-gradient(to_bottom,transparent_62%,black_96%)] ' +
-            'lg:left-auto lg:w-[58%] lg:[mask-image:none]'
-          }
-        >
+        {/* Motion graphic covering the entire hero: flowing silk ribbons drift slowly behind the copy.
+            A theme-coloured scrim keeps the text side calm and readable (AA) in both themes. */}
+        <div aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden">
           {heroBackground ? (
             <img
               src={heroBackground.src}
@@ -39,15 +32,15 @@ export default function HomePage() {
               height={heroBackground.height}
               alt=""
               decoding="async"
-              className="h-full w-full object-cover object-right motion-safe:animate-fade-in"
+              className="h-full w-full object-cover motion-safe:animate-fade-in"
             />
           ) : (
-            <Ribbon className="h-full w-full" ambient />
+            <Ribbon className="h-full w-full" layout="full" ambient />
           )}
-          <div className="absolute inset-0 hidden bg-gradient-to-r from-hero-fade via-hero-fade/20 to-transparent lg:block" />
+          <div className="absolute inset-0 bg-gradient-to-b from-hero-fade/75 via-hero-fade/55 via-60% to-hero-fade/10 lg:bg-gradient-to-r lg:from-hero-fade/85 lg:via-hero-fade/45 lg:via-40% lg:to-transparent lg:to-75%" />
         </div>
 
-        <div className="container-site w-full pb-72 pt-16 sm:pb-80 sm:pt-24 lg:py-28">
+        <div className="container-site w-full pb-40 pt-16 sm:pb-48 sm:pt-24 lg:py-28">
           <div className="max-w-3xl lg:max-w-[46rem]">
             <Eyebrow className="mb-8 motion-safe:animate-fade-up">
               AI · Product Design · Engineering
