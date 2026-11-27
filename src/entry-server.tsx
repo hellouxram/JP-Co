@@ -1,19 +1,25 @@
 /**
- * Server entry used only at build time (see scripts/postbuild-seo.mjs).
- * Renders a route to an HTML string so every page ships with its full content
- * in the HTML file. The browser then hydrates it with src/main.tsx.
+ * Server entry used only at build time.
+ *  - render():       HTML + React hydration markers (scripts/postbuild-seo.mjs, React build)
+ *  - renderStatic(): plain HTML without React markers (scripts/export-static.mjs, plain-HTML site)
  */
 import { StrictMode } from 'react';
-import { renderToString } from 'react-dom/server';
+import { renderToStaticMarkup, renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 import App from './App';
 
+const tree = (url: string) => (
+  <StrictMode>
+    <StaticRouter location={url}>
+      <App />
+    </StaticRouter>
+  </StrictMode>
+);
+
 export function render(url: string): string {
-  return renderToString(
-    <StrictMode>
-      <StaticRouter location={url}>
-        <App />
-      </StaticRouter>
-    </StrictMode>,
-  );
+  return renderToString(tree(url));
+}
+
+export function renderStatic(url: string): string {
+  return renderToStaticMarkup(tree(url));
 }

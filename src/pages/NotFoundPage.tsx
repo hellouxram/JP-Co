@@ -12,10 +12,10 @@ export default function NotFoundPage() {
       intro="The link may be out of date, or the page may have moved."
     >
       <div className="flex flex-col gap-4 sm:flex-row">
-        <ButtonLink to="/" variant="gold" arrow>
+        <ButtonLink to="/" variant="primary" arrow>
           Go to the home page
         </ButtonLink>
-        <ButtonLink to="/contact" variant="outline-light">
+        <ButtonLink to="/contact" variant="outline">
           Contact us
         </ButtonLink>
       </div>

@@ -1,5 +1,4 @@
 import { useId, useRef } from 'react';
-import { colors } from '../../config/tokens';
 import { cn } from '../../lib/cn';
 import { RIBBON_VIEWBOX, bodyPath, cubicPath, ribbonSpecs, strandPaths } from './ribbonGeometry';
 import { useAmbientRibbon } from './useAmbientRibbon';
@@ -47,31 +46,31 @@ export default function Ribbon({ className, animate = true, ambient = false }: R
     >
       <defs>
         <radialGradient id={ids.ambient} cx="0.62" cy="0.62" r="0.55">
-          <stop offset="0" stopColor={colors.gold} stopOpacity="0.08" />
-          <stop offset="1" stopColor={colors.gold} stopOpacity="0" />
+          <stop offset="0" style={{ stopColor: 'var(--rb-gold)', stopOpacity: 0.08 }} />
+          <stop offset="1" style={{ stopColor: 'var(--rb-gold)', stopOpacity: 0 }} />
         </radialGradient>
         <linearGradient id={ids.body} x1="0" y1="1" x2="1" y2="0">
-          <stop offset="0" stopColor={colors.ivory} stopOpacity="0" />
-          <stop offset="0.45" stopColor={colors.ivory} stopOpacity="0.06" />
-          <stop offset="1" stopColor={colors.ivory} stopOpacity="0.03" />
+          <stop offset="0" style={{ stopColor: 'var(--rb-hi)', stopOpacity: 0 }} />
+          <stop offset="0.45" style={{ stopColor: 'var(--rb-hi)', stopOpacity: 'var(--rb-body)' }} />
+          <stop offset="1" style={{ stopColor: 'var(--rb-hi)', stopOpacity: 0.03 }} />
         </linearGradient>
         <linearGradient id={ids.sheen} gradientUnits="userSpaceOnUse" x1="0" y1={height} x2={width} y2="0">
-          <stop offset="0" stopColor={colors.gold} stopOpacity="0" />
-          <stop offset="0.35" stopColor={colors.gold} stopOpacity="0.16" />
-          <stop offset="0.7" stopColor={colors.ivory} stopOpacity="0.22" />
-          <stop offset="1" stopColor={colors.ivory} stopOpacity="0.06" />
+          <stop offset="0" style={{ stopColor: 'var(--rb-gold)', stopOpacity: 0 }} />
+          <stop offset="0.35" style={{ stopColor: 'var(--rb-gold)', stopOpacity: 0.16 }} />
+          <stop offset="0.7" style={{ stopColor: 'var(--rb-hi)', stopOpacity: 0.22 }} />
+          <stop offset="1" style={{ stopColor: 'var(--rb-hi)', stopOpacity: 'var(--rb-body)' }} />
         </linearGradient>
         <linearGradient id={ids.strand} gradientUnits="userSpaceOnUse" x1="0" y1={height} x2={width} y2="0">
-          <stop offset="0" stopColor={colors.gold} stopOpacity="0" />
-          <stop offset="0.3" stopColor={colors.gold} stopOpacity="1" />
-          <stop offset="0.72" stopColor={colors.ivory} stopOpacity="0.9" />
-          <stop offset="1" stopColor={colors.ivory} stopOpacity="0.2" />
+          <stop offset="0" style={{ stopColor: 'var(--rb-gold)', stopOpacity: 0 }} />
+          <stop offset="0.3" style={{ stopColor: 'var(--rb-gold)', stopOpacity: 1 }} />
+          <stop offset="0.72" style={{ stopColor: 'var(--rb-hi)', stopOpacity: 0.9 }} />
+          <stop offset="1" style={{ stopColor: 'var(--rb-hi)', stopOpacity: 0.2 }} />
         </linearGradient>
         <linearGradient id={ids.edge} gradientUnits="userSpaceOnUse" x1="0" y1={height} x2={width} y2="0">
-          <stop offset="0" stopColor={colors.gold} stopOpacity="0" />
-          <stop offset="0.22" stopColor={colors.gold} stopOpacity="1" />
-          <stop offset="0.7" stopColor={colors.ivory} stopOpacity="1" />
-          <stop offset="1" stopColor={colors.ivory} stopOpacity="0.5" />
+          <stop offset="0" style={{ stopColor: 'var(--rb-gold)', stopOpacity: 0 }} />
+          <stop offset="0.22" style={{ stopColor: 'var(--rb-gold)', stopOpacity: 1 }} />
+          <stop offset="0.7" style={{ stopColor: 'var(--rb-hi)', stopOpacity: 1 }} />
+          <stop offset="1" style={{ stopColor: 'var(--rb-hi)', stopOpacity: 0.5 }} />
         </linearGradient>
         <filter id={ids.glow} x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="7" />
@@ -81,7 +80,8 @@ export default function Ribbon({ className, animate = true, ambient = false }: R
         </filter>
       </defs>
 
-      <g className={cn(animate && 'motion-safe:animate-fade-in')}>
+      {/* Colours come from theme variables (--rb-*), so the artwork adapts to light and dark. */}
+      <g className={cn(animate && 'motion-safe:animate-fade-in')} style={{ opacity: 'var(--rb-strength)' }}>
         <rect width={width} height={height} fill={`url(#${ids.ambient})`} />
         {ribbonSpecs.map((spec, i) => {
           const edgeD = cubicPath(spec.edge);
@@ -99,8 +99,7 @@ export default function Ribbon({ className, animate = true, ambient = false }: R
                 data-part="edge"
                 d={edgeD}
                 fill="none"
-                stroke={colors.gold}
-                strokeOpacity={0.7}
+                style={{ stroke: 'var(--rb-gold)', strokeOpacity: 'var(--rb-glow)' }}
                 strokeWidth={6}
                 filter={`url(#${ids.glow})`}
               />
@@ -122,8 +121,8 @@ export default function Ribbon({ className, animate = true, ambient = false }: R
                 // Its resting dash offset keeps it invisible, and it is removed entirely for reduced motion.
                 <g className="motion-reduce:hidden">
                   {[
-                    { width: 7, opacity: 0.55, filter: `url(#${ids.sweepGlow})`, stroke: colors.gold },
-                    { width: 2.2, opacity: 0.95, filter: undefined, stroke: colors.ivory },
+                    { width: 7, opacity: 0.55, filter: `url(#${ids.sweepGlow})`, stroke: 'var(--rb-gold)' },
+                    { width: 2.2, opacity: 0.95, filter: undefined, stroke: 'var(--rb-sweep)' },
                   ].map((layer, k) => (
                     <path
                       key={k}
@@ -131,7 +130,6 @@ export default function Ribbon({ className, animate = true, ambient = false }: R
                       data-part="edge"
                       d={edgeD}
                       fill="none"
-                      stroke={layer.stroke}
                       strokeOpacity={layer.opacity}
                       strokeWidth={layer.width}
                       strokeLinecap="round"
@@ -140,7 +138,7 @@ export default function Ribbon({ className, animate = true, ambient = false }: R
                       strokeDasharray="0.14 1"
                       strokeDashoffset={0.14}
                       className="motion-safe:animate-sweep"
-                      style={{ animationDelay: `${3200 + i * 2600}ms` }}
+                      style={{ stroke: layer.stroke, animationDelay: `${3200 + i * 2600}ms` }}
                     />
                   ))}
                 </g>

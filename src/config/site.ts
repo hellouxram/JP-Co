@@ -58,18 +58,27 @@ export const navigation: NavItem[] = [
 ];
 
 /**
- * Brand image assets (all under /public). The logo files are background-removed crops of
- * the final approved LinkedIn banner (see public/assets/README.md). Replace them with a
- * professionally redrawn vector master when available — dimensions are declared here so
- * swapping files does not cause layout shift.
+ * Brand image assets (all under /public). The lockups are background-removed crops of the
+ * approved v3 dark and light banners (see public/assets/README.md). Replace them with exports
+ * from a professionally redrawn vector master when available — dimensions are declared here
+ * so swapping files does not cause layout shift.
  */
 export const brandAssets = {
-  lockupOnDark: {
-    webp: '/assets/brand/jp-co-lockup-on-dark.webp',
-    png: '/assets/brand/jp-co-lockup-on-dark.png',
-    width: 672,
+  /** Gold monogram + ivory wordmark — dark theme and always-navy brand zones (footer). */
+  lockupDark: {
+    webp: '/assets/brand/jp-co-lockup-dark.webp',
+    png: '/assets/brand/jp-co-lockup-dark.png',
+    width: 523,
     height: 158,
-    alt: 'JP & Co. — Technology Company',
+    alt: 'JP & Co.',
+  },
+  /** Gold monogram + navy wordmark — light theme. */
+  lockupLight: {
+    webp: '/assets/brand/jp-co-lockup-light.webp',
+    png: '/assets/brand/jp-co-lockup-light.png',
+    width: 526,
+    height: 166,
+    alt: 'JP & Co.',
   },
   monogram: {
     webp: '/assets/brand/jp-monogram-gold.webp',

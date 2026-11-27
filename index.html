@@ -8,7 +8,19 @@
       name="description"
       content="JP &amp; Co. is a founder-led technology company offering AI and workflow automation, product design and UX, SaaS and software engineering, and product strategy."
     />
-    <meta name="theme-color" content="#0B1F3B" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0B1F3B" media="(prefers-color-scheme: dark)" />
+    <!-- Apply the saved or system theme before first paint (prevents a flash of the wrong theme). -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('jp-theme');
+          if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {}
+      })();
+    </script>
     <meta name="robots" content="index, follow" />
     <meta name="format-detection" content="telephone=no" />
 
@@ -36,7 +48,6 @@
 
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="preload" as="image" type="image/webp" href="/assets/brand/jp-co-lockup-on-dark.webp" />
     <!-- Pages are pre-rendered; without JavaScript, show scroll-reveal content immediately. -->
     <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
   </head>

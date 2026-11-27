@@ -2,38 +2,153 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ------------------------------------------------------------------
-   Brand tokens — values copied verbatim from the brand brief.
-   The *-rgb variants feed Tailwind's opacity modifiers.
-   ------------------------------------------------------------------ */
+/* ==================================================================
+   JP & Co. design tokens — dual theme (brand brief v3.0)
+   ------------------------------------------------------------------
+   Both themes share the same brand accents; only surfaces, text,
+   borders and shadows change. Components use the semantic tokens
+   (bg-page, text-fg, border-line, …), never raw hex values.
+
+   Values are RGB channels so Tailwind opacity modifiers work
+   (e.g. text-fg/80). Contrast (WCAG 2.x) is noted per token.
+
+   Deviations from the brief, for accessibility:
+   - accent-ink: brief's light-theme text gold #A47C38 is only
+     3.8:1 on white / 3.5:1 on ivory, which fails AA for normal text.
+     Small gold text uses #8C6826 (5.1:1 white, 4.7:1 ivory) instead.
+     #A47C38 is kept as `accent` for large text, icons and hovers.
+   - field: form borders need ≥ 3:1 (UI components), so they use a
+     stronger tone than the decorative `line` border.
+   ================================================================== */
+
+/* Brand constants (identical in both themes) */
 :root {
-  --jp-navy: #0b1f3b;
-  --jp-gold: #d4b483;
-  --jp-ivory: #f8f5eb;
-  --jp-slate: #5b6470;
-  --jp-white: #ffffff;
-  --jp-ink: #172337;
-  --jp-border: #d9dde3;
-
-  --jp-navy-rgb: 11 31 59;
-  --jp-gold-rgb: 212 180 131;
-  --jp-ivory-rgb: 248 245 235;
-  --jp-slate-rgb: 91 100 112;
+  --jp-navy-rgb: 11 31 59; /* #0B1F3B */
+  --jp-navy-deep-rgb: 7 21 39; /* #071527 */
+  --jp-gold-rgb: 212 180 131; /* #D4B483 */
+  --jp-gold-light-rgb: 243 215 155; /* #F3D79B */
+  --jp-ivory-rgb: 248 245 235; /* #F8F5EB */
+  --jp-slate-rgb: 91 100 112; /* #5B6470 */
+  --jp-mist-rgb: 184 195 208; /* #B8C3D0 */
   --jp-white-rgb: 255 255 255;
-  --jp-ink-rgb: 23 35 55;
-  --jp-border-rgb: 217 221 227;
-
-  /* Functional state colour (not a brand colour) — used only for form errors.
-     8.2:1 on white, 7.5:1 on ivory. */
-  --jp-error: #9b1c1c;
-  --jp-error-rgb: 155 28 28;
-
   --header-height: 4.5rem;
 }
 
 @media (min-width: 1024px) {
   :root {
     --header-height: 5.5rem;
+  }
+}
+
+/* Light theme (default) */
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+  --c-page: 255 255 255; /* #FFFFFF */
+  --c-surface: 248 245 235; /* #F8F5EB */
+  --c-raised: 255 255 255; /* #FFFFFF */
+  --c-header: 255 255 255;
+  --c-fg: 11 31 59; /* #0B1F3B · 16.5:1 on page, 15.1:1 on surface */
+  --c-muted: 91 100 112; /* #5B6470 · 6.0:1 on page, 5.5:1 on surface */
+  --c-line: 217 221 227; /* #D9DDE3 · decorative dividers */
+  --c-field: 124 131 141; /* #7C838D · 3.8:1 on white (form borders) */
+  --c-input: 255 255 255;
+  --c-accent: 164 124 56; /* #A47C38 · large text / icons / hovers (3.8:1) */
+  --c-accent-ink: 140 104 38; /* #8C6826 · small gold text (5.1:1 / 4.7:1) */
+  --c-deco: 212 180 131; /* #D4B483 · decoration only, never text */
+  --c-icon: 11 31 59; /* navy linework */
+  --c-btn: 11 31 59; /* #0B1F3B */
+  --c-btn-fg: 255 255 255; /* 16.5:1 */
+  --c-btn-hover: 23 35 55; /* #172337 */
+  --c-focus: 118 83 25; /* #765319 · 6.9:1 on white */
+  --c-danger: 155 28 28; /* #9B1C1C · 8.2:1 on white */
+  --shadow-card: 0 1px 2px rgb(11 31 59 / 0.04), 0 12px 32px -16px rgb(11 31 59 / 0.18);
+  --shadow-card-hover: 0 2px 4px rgb(11 31 59 / 0.05), 0 20px 40px -18px rgb(11 31 59 / 0.24);
+  --hero-bg: radial-gradient(120% 90% at 78% 62%, #ffffff 0%, #fcfaf4 42%, #f8f5eb 100%);
+  --hero-fade: 248 245 235;
+  /* Ribbon artwork: faint gold + slate linework on light */
+  --rb-hi: #5b6470;
+  --rb-gold: #c9a464;
+  --rb-sweep: #a47c38;
+  --rb-glow: 0.28;
+  --rb-strength: 0.8;
+  --rb-body: 0.05;
+  --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230B1F3B' stroke-width='1.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  --only-light: contents;
+  --only-dark: none;
+}
+
+/* Dark theme — explicit choice … */
+[data-theme='dark'] {
+  color-scheme: dark;
+  --c-page: 7 21 39; /* #071527 */
+  --c-surface: 11 31 59; /* #0B1F3B */
+  --c-raised: 19 43 73; /* #132B49 */
+  --c-header: 11 31 59;
+  --c-fg: 248 245 235; /* #F8F5EB · 16.8:1 on page, 13.1:1 on raised */
+  --c-muted: 184 195 208; /* #B8C3D0 · 10.3:1 on page, 8.0:1 on raised */
+  --c-line: 44 65 89; /* #2C4159 */
+  --c-field: 106 132 163; /* #6A84A3 · 3.7:1 on raised */
+  --c-input: 11 31 59;
+  --c-accent: 212 180 131; /* #D4B483 · 7.3:1 on raised */
+  --c-accent-ink: 212 180 131;
+  --c-deco: 212 180 131;
+  --c-icon: 212 180 131; /* gold linework */
+  --c-btn: 212 180 131; /* #D4B483 */
+  --c-btn-fg: 7 21 39; /* 9.3:1 */
+  --c-btn-hover: 243 215 155; /* #F3D79B */
+  --c-focus: 243 215 155; /* #F3D79B · 13.1:1 on page */
+  --c-danger: 252 165 165; /* #FCA5A5 · 7.5:1 on raised */
+  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 16px 40px -24px rgb(0 0 0 / 0.6);
+  --shadow-card-hover: 0 1px 0 rgb(255 255 255 / 0.05) inset, 0 24px 48px -24px rgb(0 0 0 / 0.7);
+  --hero-bg: radial-gradient(120% 90% at 78% 62%, #132b49 0%, #0b1f3b 45%, #071527 100%);
+  --hero-fade: 7 21 39;
+  --rb-hi: #f8f5eb;
+  --rb-gold: #d4b483;
+  --rb-sweep: #f8f5eb;
+  --rb-glow: 0.7;
+  --rb-strength: 1;
+  --rb-body: 0.06;
+  --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D4B483' stroke-width='1.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  --only-light: none;
+  --only-dark: contents;
+}
+
+/* … or the system preference when no choice has been made (also covers no-JS visitors). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --c-page: 7 21 39;
+    --c-surface: 11 31 59;
+    --c-raised: 19 43 73;
+    --c-header: 11 31 59;
+    --c-fg: 248 245 235;
+    --c-muted: 184 195 208;
+    --c-line: 44 65 89;
+    --c-field: 106 132 163;
+    --c-input: 11 31 59;
+    --c-accent: 212 180 131;
+    --c-accent-ink: 212 180 131;
+    --c-deco: 212 180 131;
+    --c-icon: 212 180 131;
+    --c-btn: 212 180 131;
+    --c-btn-fg: 7 21 39;
+    --c-btn-hover: 243 215 155;
+    --c-focus: 243 215 155;
+    --c-danger: 252 165 165;
+    --shadow-card: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 16px 40px -24px rgb(0 0 0 / 0.6);
+    --shadow-card-hover: 0 1px 0 rgb(255 255 255 / 0.05) inset, 0 24px 48px -24px rgb(0 0 0 / 0.7);
+    --hero-bg: radial-gradient(120% 90% at 78% 62%, #132b49 0%, #0b1f3b 45%, #071527 100%);
+    --hero-fade: 7 21 39;
+    --rb-hi: #f8f5eb;
+    --rb-gold: #d4b483;
+    --rb-sweep: #f8f5eb;
+    --rb-glow: 0.7;
+    --rb-strength: 1;
+    --rb-body: 0.06;
+    --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D4B483' stroke-width='1.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    --only-light: none;
+    --only-dark: contents;
   }
 }
 
@@ -51,29 +166,32 @@
   }
 
   body {
-    @apply bg-jp-ivory font-sans text-body text-jp-ink antialiased;
+    @apply bg-page font-sans text-body text-fg antialiased;
   }
 
   h1,
-  h2,
+  h2 {
+    @apply font-serif font-semibold text-balance;
+  }
+
   h3 {
-    @apply font-serif font-normal text-balance;
+    @apply font-serif font-medium text-balance;
   }
 
   ::selection {
     background: rgb(var(--jp-gold-rgb) / 0.45);
-    color: var(--jp-navy);
+    color: rgb(var(--jp-navy-rgb));
   }
 
-  /* Focus: navy ring on light surfaces, champagne-gold ring on navy surfaces (both ≥ 3:1). */
+  /* Focus ring from the theme (≥ 3:1 everywhere); brand-navy zones always use light gold. */
   :focus-visible {
-    outline: 2px solid var(--jp-navy);
+    outline: 2px solid rgb(var(--c-focus));
     outline-offset: 3px;
     border-radius: 2px;
   }
 
-  .surface-dark :focus-visible {
-    outline-color: var(--jp-gold);
+  .surface-brand :focus-visible {
+    outline-color: rgb(var(--jp-gold-light-rgb));
   }
 
   /* Never hide focus for keyboard users; suppress the ring only for pointer focus. */
@@ -91,12 +209,52 @@
     @apply font-sans text-eyebrow font-medium uppercase;
   }
 
-  .hairline {
-    @apply h-px w-full bg-jp-border;
+  /* Deep-navy brand band — identical in both themes (footer, founder tile, feature bands). */
+  .surface-brand {
+    @apply bg-jp-navy text-jp-ivory;
   }
 
-  .surface-dark {
-    @apply bg-jp-navy text-jp-ivory;
+  /* Themed hero background: ivory light / navy depth in dark. */
+  .surface-hero {
+    background: var(--hero-bg);
+    @apply text-fg;
+  }
+
+  /* Raised card: 12px radius, hairline border, soft theme-aware shadow. */
+  .card {
+    @apply rounded-xl border border-line bg-raised;
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-hover {
+    transition:
+      box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.4s;
+  }
+
+  .card-hover:hover {
+    box-shadow: var(--shadow-card-hover);
+    border-color: rgb(var(--c-deco) / 0.6);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .card-hover:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  /* Theme-specific artwork (logos, toggle icons). Variable-driven so it also follows the system theme without JS. */
+  .show-light {
+    display: var(--only-light);
+  }
+
+  .show-dark {
+    display: var(--only-dark);
+  }
+
+  .select-arrow {
+    background-image: var(--select-arrow);
   }
 
   /* Text link with a quiet underline that strengthens on hover. */
@@ -109,6 +267,20 @@
   .link:hover {
     text-decoration-thickness: 2px;
   }
+}
+
+/* Smooth cross-fade when the visitor switches theme (added briefly by the toggle). */
+html.theme-switching,
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    color 0.35s ease,
+    fill 0.35s ease,
+    stroke 0.35s ease,
+    box-shadow 0.35s ease !important;
 }
 
 /* ------------------------------------------------------------------

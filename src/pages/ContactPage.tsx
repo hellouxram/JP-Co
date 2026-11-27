@@ -36,28 +36,28 @@ export default function ContactPage() {
         intro="Share a little about what you are working on. We will reply to arrange a scoping call if it looks like a good fit."
       />
 
-      <section aria-label="Contact details and enquiry form" className="bg-jp-ivory py-section">
+      <section aria-label="Contact details and enquiry form" className="bg-surface py-section">
         <div className="container-site grid gap-16 lg:grid-cols-12 lg:gap-20">
           {/* Direct contact details */}
           <Reveal className="lg:col-span-4">
             <Eyebrow className="mb-6">Direct</Eyebrow>
-            <h2 className="text-h3 text-jp-navy">Prefer to get in touch directly?</h2>
-            <p className="mt-4 text-jp-slate">
+            <h2 className="text-h3 text-fg">Prefer to get in touch directly?</h2>
+            <p className="mt-4 text-muted">
               Contact {site.founder.name}, {site.founder.title}.
             </p>
 
-            <dl className="mt-10 border-t border-jp-border">
+            <dl className="mt-10 border-t border-line">
               {contactItems.map(({ label, value, href, Icon, external }) => (
-                <div key={label} className="border-b border-jp-border py-5">
-                  <dt className="eyebrow text-jp-slate">{label}</dt>
+                <div key={label} className="border-b border-line py-5">
+                  <dt className="eyebrow text-muted">{label}</dt>
                   <dd className="mt-2">
                     <a
                       href={href}
                       {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                      className="group inline-flex min-h-[2.75rem] items-center gap-3 text-lg text-jp-navy"
+                      className="group inline-flex min-h-[2.75rem] items-center gap-3 text-lg text-fg"
                     >
-                      <Icon className="h-5 w-5 shrink-0" />
-                      <span className="underline decoration-jp-navy/30 decoration-1 underline-offset-[0.25em] transition-colors group-hover:decoration-jp-navy">
+                      <Icon className="h-5 w-5 shrink-0 text-icon" />
+                      <span className="underline decoration-fg/30 decoration-1 underline-offset-[0.25em] transition-colors group-hover:decoration-fg">
                         {value}
                       </span>
                       {external && <span className="sr-only"> (opens in a new tab)</span>}
@@ -70,9 +70,9 @@ export default function ContactPage() {
 
           {/* Enquiry form */}
           <Reveal className="lg:col-span-8" delay={120}>
-            <div className="border border-jp-border bg-jp-ivory p-6 sm:p-10 lg:p-12">
+            <div className="card p-6 sm:p-10 lg:p-12">
               <Eyebrow className="mb-6">Enquiry</Eyebrow>
-              <h2 className="mb-8 text-h3 text-jp-navy">Tell us about your project</h2>
+              <h2 className="mb-8 text-h3 text-fg">Tell us about your project</h2>
               <ContactForm key={preselected} initialProjectType={preselected} />
             </div>
           </Reveal>
