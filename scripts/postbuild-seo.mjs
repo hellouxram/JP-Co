@@ -31,6 +31,26 @@ function setMeta(html, attr, key, value) {
   return html.replace(re, `<meta ${attr}="${key}" content="${esc(value)}" />`);
 }
 
+/**
+ * Organization + WebSite structured data for the home page. Only facts supplied in the brand
+ * brief — no address, ratings or social profiles. Emitted only once the domain is verified.
+ */
+function structuredData() {
+  const org = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: meta.siteName,
+    description: meta.routes.find((r) => r.path === '/').description,
+    url: `${siteUrl}/`,
+    logo: `${siteUrl}/apple-touch-icon.png`,
+    email: 'ram@jpandcotech.com',
+    founder: { '@type': 'Person', name: 'Lakshmi Narayana (Ram)', jobTitle: 'CEO & Founder' },
+  };
+  const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: meta.siteName, url: `${siteUrl}/` };
+  const json = JSON.stringify([org, website]).replace(/</g, '\\u003c');
+  return `    <script type="application/ld+json">${json}</script>\n`;
+}
+
 function render({ path: routePath, title, description }, { noindex = false } = {}) {
   let html = template.replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(title)}</title>`);
   html = setMeta(html, 'name', 'description', description);
@@ -48,7 +68,9 @@ function render({ path: routePath, title, description }, { noindex = false } = {
     html = setMeta(html, 'name', 'twitter:image', image);
     html = html.replace(
       '</head>',
-      `    <link rel="canonical" href="${esc(url)}" />\n    <meta property="og:url" content="${esc(url)}" />\n  </head>`,
+      `    <link rel="canonical" href="${esc(url)}" />\n    <meta property="og:url" content="${esc(url)}" />\n${
+        routePath === '/' ? structuredData() : ''
+      }  </head>`,
     );
   }
   return html;
