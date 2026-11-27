@@ -28,7 +28,7 @@ export default function HomePage() {
           aria-hidden="true"
           className={
             'absolute inset-0 -z-10 overflow-hidden ' +
-            '[mask-image:linear-gradient(to_bottom,transparent_45%,black_85%)] ' +
+            '[mask-image:linear-gradient(to_bottom,transparent_62%,black_96%)] ' +
             'lg:left-auto lg:w-[58%] lg:[mask-image:none]'
           }
         >
