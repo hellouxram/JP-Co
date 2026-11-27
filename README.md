@@ -33,6 +33,13 @@ npm run dev        # http://localhost:5173
 | `VITE_SITE_URL_VERIFIED` | `false` | Set to `true` only after you confirm you own the domain and it serves this site |
 | `VITE_CONTACT_FORM_ENDPOINT` | *(empty)* | A JSON POST endpoint for form submissions. Leave it empty and the form stays in "not connected" mode |
 
+## SEO, AEO and GEO
+
+- **Per-page meta:** keyword-led titles and descriptions (under 65 and 160 characters) live in `src/config/routes-meta.json`.
+- **Structured data:** `src/seo/structuredData.ts` builds JSON-LD for every page from the same config the pages use: Organization, WebSite, Person (founder), Service ×4, FAQPage (Home and Services), HowTo (Approach), AboutPage, ContactPage and BreadcrumbList. It is injected at build time. Absolute URLs are added only once the domain is verified.
+- **Answer-first content:** visible FAQ sections on Home and Services and an "At a glance" fact sheet on About give search engines and AI assistants complete, quotable answers. Copy is in `companyFaqs` and `engagementFaqs` in `src/config/content.ts`.
+- **AI crawlers:** the build writes `robots.txt` with named AI user agents allowed, and `llms.txt`, a markdown summary of the company, services, process and FAQs.
+
 ## How the contact form works
 
 - **No endpoint configured (the default):** the form shows a notice that it isn't connected. On submit it checks the fields and then opens the visitor's own email app with a pre-filled message to `ram@jpandcotech.com`. The site never says a message was sent.

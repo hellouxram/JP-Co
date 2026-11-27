@@ -193,3 +193,66 @@ export const values: { title: string; body: string }[] = [
 ];
 
 export const projectTypes: string[] = [...services.map((s) => s.title), 'Something else'];
+
+/**
+ * Question-and-answer copy. Written answer-first so search engines and AI assistants can quote a
+ * complete answer from one paragraph. Every answer restates facts already on the site — keep it
+ * that way (no prices, timelines, client names or claims that have not been verified).
+ * Each set appears on one page only, and the same text feeds that page's FAQPage structured data.
+ */
+export type Faq = { question: string; answer: string };
+
+export const companyFaqs: Faq[] = [
+  {
+    question: 'What is JP & Co.?',
+    answer:
+      'JP & Co. is a founder-led technology company led by Lakshmi Narayana (Ram), CEO & Founder. It works with businesses on AI and workflow automation, product design and UX, SaaS and software engineering, and product strategy.',
+  },
+  {
+    question: 'What services does JP & Co. offer?',
+    answer:
+      'JP & Co. offers four services: AI and workflow automation, product design and UX, SaaS and software engineering, and product strategy. They can be used together or on their own, depending on what the problem needs.',
+  },
+  {
+    question: 'Who founded JP & Co.?',
+    answer: 'JP & Co. was founded by Lakshmi Narayana (Ram), who leads the company as CEO & Founder.',
+  },
+  {
+    question: 'Does JP & Co. build its own products?',
+    answer:
+      'Not yet. Today JP & Co. works with businesses on client projects. Over time it plans to build its own B2B SaaS products, shaped by the problems it sees in that work.',
+  },
+  {
+    question: 'How do I start a project with JP & Co.?',
+    answer:
+      'Every project starts with a scoping call. Email ram@jpandcotech.com, call 9573319095 or use the enquiry form on the Contact page. If it looks like a good fit, JP & Co. follows up with a written outline of scope and next steps.',
+  },
+];
+
+export const engagementFaqs: Faq[] = [
+  {
+    question: 'How much does a project cost, and how long does it take?',
+    answer:
+      'It depends on scope and complexity, so JP & Co. gives estimates after a discovery step, once the problem is properly understood, rather than before it. If scope changes during a project, you are told early and the adjustment to scope, time or budget is agreed together.',
+  },
+  {
+    question: 'Should every business process use AI?',
+    answer:
+      'No. Not every process benefits from AI. Part of the automation work is identifying where AI helps, where a simple rule or an integration is the better answer, and where no change is needed at all. Where AI is used, people stay in the loop for review.',
+  },
+  {
+    question: 'What is an MVP and what does it include?',
+    answer:
+      'An MVP (minimum viable product) is an intentionally narrow first version of a product that tests the core idea before more is invested. JP & Co. agrees in writing what is in and out of scope before building, and flags trade-offs as they come up.',
+  },
+  {
+    question: 'Will we receive the source code and documentation?',
+    answer:
+      'Yes. Engineering work is handed over with source code and technical documentation as agreed, plus a short list of known limitations and recommended next steps, so your team can understand and extend what was built.',
+  },
+  {
+    question: 'Can JP & Co. work with the tools we already use?',
+    answer:
+      'Yes. Automations are designed to fit your existing tools rather than replace them by default, and integrations between the tools your team already uses are part of the AI and workflow automation service.',
+  },
+];

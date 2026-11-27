@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import CtaBand from '../components/sections/CtaBand';
+import FaqSection from '../components/sections/FaqSection';
 import PageHero from '../components/sections/PageHero';
 import { ArrowRightIcon, CheckIcon, InfoIcon } from '../components/ui/Icons';
 import Reveal from '../components/ui/Reveal';
 import { Eyebrow } from '../components/ui/SectionHeading';
-import { services } from '../config/content';
+import { engagementFaqs, services } from '../config/content';
 import { cn } from '../lib/cn';
 import { usePageMeta } from '../hooks/usePageMeta';
 
@@ -118,6 +119,8 @@ export default function ServicesPage() {
           </Reveal>
         </div>
       </section>
+
+      <FaqSection id="services-faq-title" title="Common questions about working with us" faqs={engagementFaqs} />
 
       <CtaBand
         title="Ready to talk through a project?"

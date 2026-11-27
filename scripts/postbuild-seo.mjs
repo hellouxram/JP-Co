@@ -27,7 +27,7 @@ const template = await readFile(path.join(dist, 'index.html'), 'utf8');
 
 // Server bundle produced by `vite build --ssr src/entry-server.tsx --outDir dist-ssr`.
 process.env.NODE_ENV = 'production';
-const { render: renderApp } = await import(pathToFileURL(path.join(root, 'dist-ssr', 'entry-server.js')).href);
+const { render: renderApp, structuredDataFor, llmsTxt } = await import(pathToFileURL(path.join(root, 'dist-ssr', 'entry-server.js')).href);
 const ROOT_EMPTY = '<div id="root"></div>';
 if (!template.includes(ROOT_EMPTY)) throw new Error('postbuild-seo: empty <div id="root"></div> not found in index.html');
 const inGithubActions = env.GITHUB_ACTIONS === 'true';
@@ -52,24 +52,11 @@ function setMeta(html, attr, key, value) {
   return html.replace(re, `<meta ${attr}="${key}" content="${esc(value)}" />`);
 }
 
-/**
- * Organization + WebSite structured data for the home page. Only facts supplied in the brand
- * brief — no address, ratings or social profiles. Emitted only once the domain is verified.
- */
-function structuredData() {
-  const org = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: meta.siteName,
-    description: meta.routes.find((r) => r.path === '/').description,
-    url: `${siteUrl}/`,
-    logo: `${siteUrl}/apple-touch-icon.png`,
-    email: 'ram@jpandcotech.com',
-    founder: { '@type': 'Person', name: 'Lakshmi Narayana (Ram)', jobTitle: 'CEO & Founder' },
-  };
-  const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: meta.siteName, url: `${siteUrl}/` };
-  const json = JSON.stringify([org, website]).replace(/</g, '\\u003c');
-  return `    <script type="application/ld+json">${json}</script>\n`;
+/** Per-page JSON-LD from src/seo/structuredData.ts (absolute URLs only when the domain is verified). */
+function jsonLd(routePath) {
+  const data = structuredDataFor(routePath, verified ? siteUrl : '');
+  if (!data) return '';
+  return `    <script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>\n`;
 }
 
 function render({ path: routePath, title, description }, { noindex = false, appHtml = '' } = {}) {
@@ -82,6 +69,8 @@ function render({ path: routePath, title, description }, { noindex = false, appH
   html = setMeta(html, 'name', 'twitter:description', description);
   if (noindex) html = setMeta(html, 'name', 'robots', 'noindex, follow');
 
+  if (routePath) html = html.replace('</head>', () => `${jsonLd(routePath)}  </head>`);
+
   if (verified && routePath) {
     // Trailing slash matches how static hosts (GitHub Pages, Netlify) serve dist/<route>/index.html.
     const url = routePath === '/' ? `${siteUrl}/` : `${siteUrl}${routePath}/`;
@@ -90,9 +79,7 @@ function render({ path: routePath, title, description }, { noindex = false, appH
     html = setMeta(html, 'name', 'twitter:image', image);
     html = html.replace(
       '</head>',
-      `    <link rel="canonical" href="${esc(url)}" />\n    <meta property="og:url" content="${esc(url)}" />\n${
-        routePath === '/' ? structuredData() : ''
-      }  </head>`,
+      `    <link rel="canonical" href="${esc(url)}" />\n    <meta property="og:url" content="${esc(url)}" />\n  </head>`,
     );
   }
   return html;
@@ -111,8 +98,22 @@ await writeFile(
 );
 console.log('  seo  404        → dist/404.html (noindex)');
 
-const robots = ['User-agent: *', 'Allow: /', ...(verified ? ['', `Sitemap: ${siteUrl}/sitemap.xml`] : []), ''].join('\n');
+// Search engines and AI crawlers are all welcome. The named AI user agents are listed explicitly so the
+// intent is unambiguous to AI search and answer engines (GEO); `User-agent: *` already allows them.
+const aiCrawlers = [
+  'GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-User', 'Claude-SearchBot', 'anthropic-ai',
+  'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Applebot-Extended', 'Bingbot', 'CCBot', 'meta-externalagent',
+];
+const robots = [
+  'User-agent: *',
+  'Allow: /',
+  '',
+  ...aiCrawlers.flatMap((ua) => [`User-agent: ${ua}`, 'Allow: /', '']),
+  ...(verified ? [`Sitemap: ${siteUrl}/sitemap.xml`, ''] : []),
+].join('\n');
 await writeFile(path.join(dist, 'robots.txt'), robots);
+await writeFile(path.join(dist, 'llms.txt'), llmsTxt(verified ? siteUrl : ''));
+console.log('  geo  robots.txt (AI crawlers allowed) + llms.txt');
 
 if (verified) {
   const today = new Date().toISOString().slice(0, 10);

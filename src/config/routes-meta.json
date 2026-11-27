@@ -5,28 +5,28 @@
   "routes": [
     {
       "path": "/",
-      "title": "JP & Co. — Technology built with purpose",
-      "description": "JP & Co. is a founder-led technology company offering AI and workflow automation, product design and UX, SaaS and software engineering, and product strategy."
+      "title": "JP & Co. | AI Automation, Product Design & Software Engineering",
+      "description": "Founder-led technology company offering AI and workflow automation, product design and UX, SaaS and software engineering, and product strategy."
     },
     {
       "path": "/services",
-      "title": "Services — JP & Co.",
-      "description": "AI and workflow automation, product design and UX, SaaS and software engineering, and product strategy — what each engagement can include and what you receive."
+      "title": "AI Automation, UX Design & SaaS Development Services | JP & Co.",
+      "description": "AI and workflow automation, product design and UX, SaaS and software engineering, and product strategy: what each engagement includes and delivers."
     },
     {
       "path": "/approach",
-      "title": "Approach — JP & Co.",
-      "description": "How JP & Co. works: Discover, Design, Build, Improve. Tangible outputs at each step and honest expectations about scope and timelines."
+      "title": "How We Work: Discover, Design, Build, Improve | JP & Co.",
+      "description": "JP & Co.'s four-step process: Discover, Design, Build, Improve. Every step ends with an output you can review, and estimates come after discovery."
     },
     {
       "path": "/about",
-      "title": "About — JP & Co.",
-      "description": "JP & Co. is a founder-led technology business led by Lakshmi Narayana (Ram), CEO & Founder. Built on vision. Driven by innovation."
+      "title": "About JP & Co. | Founder-Led Technology Company",
+      "description": "JP & Co. is a founder-led technology company led by Lakshmi Narayana (Ram), CEO & Founder, working across AI, product design and software engineering."
     },
     {
       "path": "/contact",
-      "title": "Contact — JP & Co.",
-      "description": "Discuss a project with JP & Co. Email ram@jpandcotech.com or call 9573319095."
+      "title": "Contact JP & Co. | Discuss an AI, Design or Software Project",
+      "description": "Start a project with JP & Co. with a scoping call. Email ram@jpandcotech.com, call 9573319095 or send an enquiry through the form."
     }
   ],
   "notFound": {

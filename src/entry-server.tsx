@@ -8,6 +8,8 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 import App from './App';
 
+export { llmsTxt, structuredDataFor } from './seo/structuredData';
+
 export function render(url: string): string {
   return renderToString(
     <StrictMode>

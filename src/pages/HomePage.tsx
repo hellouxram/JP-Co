@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
 import Ribbon from '../components/brand/Ribbon';
 import CtaBand from '../components/sections/CtaBand';
+import FaqSection from '../components/sections/FaqSection';
 import ProcessStrip from '../components/sections/ProcessStrip';
 import ServiceCard from '../components/sections/ServiceCard';
 import { ButtonLink } from '../components/ui/Button';
 import { ArrowRightIcon } from '../components/ui/Icons';
 import Reveal from '../components/ui/Reveal';
 import SectionHeading, { Eyebrow } from '../components/ui/SectionHeading';
-import { services } from '../config/content';
+import { companyFaqs, services } from '../config/content';
 import { brandAssets, site } from '../config/site';
 import { usePageMeta } from '../hooks/usePageMeta';
 
@@ -171,6 +172,14 @@ export default function HomePage() {
           <ProcessStrip className="mt-14" />
         </div>
       </section>
+
+      {/* ───────────── FAQ (answer-first copy for search and AI assistants) ───────────── */}
+      <FaqSection
+        id="faq-title"
+        title="Questions about JP & Co."
+        faqs={companyFaqs}
+        className="border-t border-jp-border bg-jp-white"
+      />
 
       {/* ───────────── Closing CTA ───────────── */}
       <CtaBand

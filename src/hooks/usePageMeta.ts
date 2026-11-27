@@ -48,7 +48,7 @@ export function usePageMeta(path: string, opts: { noindex?: boolean } = {}) {
     setMeta('meta[property="og:description"]', 'property', 'og:description', description);
     setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', title);
     setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', description);
-    setMeta('meta[name="robots"]', 'name', 'robots', noindex ? 'noindex, follow' : 'index, follow');
+    setMeta('meta[name="robots"]', 'name', 'robots', noindex ? 'noindex, follow' : 'index, follow, max-snippet:-1, max-image-preview:large');
 
     if (site.domainVerified && !noindex) {
       // Trailing slash matches the static host's canonical form of dist/<route>/index.html.

@@ -4,7 +4,7 @@ import PageHero from '../components/sections/PageHero';
 import { MailIcon } from '../components/ui/Icons';
 import Reveal from '../components/ui/Reveal';
 import SectionHeading, { Eyebrow } from '../components/ui/SectionHeading';
-import { values } from '../config/content';
+import { services, values } from '../config/content';
 import { site } from '../config/site';
 import { usePageMeta } from '../hooks/usePageMeta';
 
@@ -70,6 +70,31 @@ export default function AboutPage() {
               work. Our services and our products share the same standard: clear purpose, careful design and solid
               engineering.
             </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* At a glance — a plain fact sheet that search engines and AI assistants can quote directly */}
+      <section aria-labelledby="facts-title" className="bg-jp-ivory pt-section">
+        <div className="container-site grid gap-10 lg:grid-cols-12 lg:gap-16">
+          <Reveal className="lg:col-span-5">
+            <SectionHeading id="facts-title" eyebrow="At a glance" title="JP & Co. in brief." />
+          </Reveal>
+          <Reveal className="lg:col-span-7 lg:pt-14" delay={120}>
+            <dl className="border-t border-jp-border">
+              {[
+                ['Company', `${site.name} (${site.descriptor})`],
+                ['Founder', `${site.founder.name}, ${site.founder.title}`],
+                ['Services', services.map((s) => s.title).join(' · ')],
+                ['Direction', 'Client work today; proprietary B2B SaaS products over time'],
+                ['Contact', `${site.contact.email} · ${site.contact.phoneDisplay}`],
+              ].map(([term, detail]) => (
+                <div key={term} className="grid gap-1 border-b border-jp-border py-5 sm:grid-cols-[10rem_1fr] sm:gap-6">
+                  <dt className="eyebrow text-jp-slate">{term}</dt>
+                  <dd className="text-jp-ink">{detail}</dd>
+                </div>
+              ))}
+            </dl>
           </Reveal>
         </div>
       </section>
