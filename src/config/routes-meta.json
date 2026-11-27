@@ -1,0 +1,36 @@
+{
+  "siteName": "JP & Co.",
+  "ogImage": "/og-image-1200x630.png",
+  "ogImageAlt": "JP & Co. — Technology Company. Built on vision. Driven by innovation.",
+  "routes": [
+    {
+      "path": "/",
+      "title": "JP & Co. — Technology built with purpose",
+      "description": "JP & Co. is a founder-led technology company offering AI and workflow automation, product design and UX, SaaS and software engineering, and product strategy."
+    },
+    {
+      "path": "/services",
+      "title": "Services — JP & Co.",
+      "description": "AI and workflow automation, product design and UX, SaaS and software engineering, and product strategy — what each engagement can include and what you receive."
+    },
+    {
+      "path": "/approach",
+      "title": "Approach — JP & Co.",
+      "description": "How JP & Co. works: Discover, Design, Build, Improve. Tangible outputs at each step and honest expectations about scope and timelines."
+    },
+    {
+      "path": "/about",
+      "title": "About — JP & Co.",
+      "description": "JP & Co. is a founder-led technology business led by Lakshmi Narayana (Ram), CEO & Founder. Built on vision. Driven by innovation."
+    },
+    {
+      "path": "/contact",
+      "title": "Contact — JP & Co.",
+      "description": "Discuss a project with JP & Co. Email ram@jpandcotech.com or call 9573319095."
+    }
+  ],
+  "notFound": {
+    "title": "Page not found — JP & Co.",
+    "description": "The page you were looking for could not be found."
+  }
+}
