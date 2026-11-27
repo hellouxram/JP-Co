@@ -71,11 +71,17 @@ export default {
           from: { strokeDashoffset: '1' },
           to: { strokeDashoffset: '0' },
         },
+        // Light sweep along the ribbon edge (pathLength = 1, dash = 0.14): glide, then rest.
+        sweep: {
+          '0%': { strokeDashoffset: '0.14' },
+          '55%, 100%': { strokeDashoffset: '-1' },
+        },
       },
       animation: {
         'fade-up': 'fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both',
         'fade-in': 'fade-in 1.4s cubic-bezier(0.22, 1, 0.36, 1) both',
         draw: 'draw 2.4s cubic-bezier(0.22, 1, 0.36, 1) both',
+        sweep: 'sweep 11s cubic-bezier(0.45, 0, 0.25, 1) infinite both',
       },
     },
   },

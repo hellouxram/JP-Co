@@ -25,7 +25,7 @@ export default function HomePage() {
         {/* Ribbon: below the copy on small screens (no overlap), right-hand side on desktop. */}
         <div
           aria-hidden="true"
-          className="absolute inset-x-0 bottom-0 -z-10 h-72 sm:h-80 lg:inset-y-0 lg:left-auto lg:right-0 lg:h-auto lg:w-[58%]"
+          className="absolute inset-x-0 bottom-0 -z-10 h-72 overflow-hidden sm:h-80 lg:inset-y-0 lg:left-auto lg:right-0 lg:h-auto lg:w-[58%]"
         >
           {heroBackground ? (
             <img
@@ -37,7 +37,7 @@ export default function HomePage() {
               className="h-full w-full object-cover object-right motion-safe:animate-fade-in"
             />
           ) : (
-            <Ribbon className="h-full w-full" />
+            <Ribbon className="h-full w-full" ambient />
           )}
           <div className="absolute inset-0 hidden bg-gradient-to-r from-jp-navy via-jp-navy/20 to-transparent lg:block" />
         </div>
