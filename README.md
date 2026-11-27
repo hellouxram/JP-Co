@@ -16,7 +16,7 @@ npm run dev        # http://localhost:5173
 |---|---|
 | `npm run dev` | Starts the local dev server with hot reload |
 | `npm run typecheck` | Runs a strict TypeScript check |
-| `npm run build` | Type-checks, builds to `dist/`, then runs `scripts/postbuild-seo.mjs` |
+| `npm run build` | Type-checks, builds the client to `dist/` and the server render bundle to `dist-ssr/`, then runs `scripts/postbuild-seo.mjs`. That script writes every page as complete static HTML, with full text and per-page meta tags, and React hydrates it in the browser |
 | `npm run preview` | Serves the production build at http://localhost:4173 |
 
 ## Configuration
