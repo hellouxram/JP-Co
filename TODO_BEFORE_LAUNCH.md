@@ -13,7 +13,7 @@ This site uses only details the founder supplied in the brand brief (v2.0, 27 No
 ## 2. Legal and company
 - [ ] Confirm the final legal entity name and whether it has been incorporated (MCA). The site deliberately shows only "JP & Co." with the descriptor "Technology Company" and no legal suffix. Add the registered name, CIN and registered address to the footer only once they exist.
 - [ ] Get trademark clearance for "JP & Co." and the JP monogram in the relevant classes. Avoid any presentation that could be confused with financial institutions.
-- [x] Write a full **Privacy Policy** (published at /privacy/ on 28 Nov 2026; have it reviewed by a lawyer, and confirm the 12-month retention period and 30-day response time suit you) covering the contact form, email handling, hosting and any analytics. India's DPDP Act 2023 is likely to apply. Link it from the footer and the form's privacy notice. The current notice is a short interim statement.
+- [x] Write a full **Privacy Policy** (published at /privacy/ on 28 Nov 2026, effective from 30 Nov 2026; have it reviewed by a lawyer, and confirm the 12-month retention period and 30-day response time suit you) covering the contact form, email handling, hosting and any analytics. India's DPDP Act 2023 is likely to apply. Link it from the footer and the form's privacy notice. The current notice is a short interim statement.
 - [ ] Add **Terms of Use** if needed.
 - [ ] Review all marketing copy for claims you can support. The site currently has no testimonials, client logos, statistics, team members, street address or years in operation. Keep it that way until each item is verified.
 
