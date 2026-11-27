@@ -2,8 +2,7 @@
  * JP & Co. — site behaviour (plain JavaScript, no framework).
  *
  * Every page is complete HTML; this file only adds progressive enhancements:
- *   0. Light / dark theme toggle
- *   1. Header shadow on scroll
+ *   1. Header hairline on scroll
  *   2. Accessible mobile menu
  *   3. Scroll-reveal animations
  *   4. Ambient hero ribbon motion (home page)
@@ -19,57 +18,14 @@
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   /* ------------------------------------------------------------------
-     0. Theme. The initial theme (saved choice, else system preference) is set
-        by an inline script in each page's <head> before first paint. Logos and
-        icons switch by CSS. An explicit choice is saved only after the visitor
-        uses the toggle; otherwise the site follows the OS setting live.
-     ------------------------------------------------------------------ */
-  var THEME_KEY = 'jp-theme';
-  var root = document.documentElement;
-  var themeButtons = document.querySelectorAll('[data-theme-toggle]');
-  var systemDark = window.matchMedia('(prefers-color-scheme: dark)');
-
-  function currentTheme() {
-    return root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-  }
-
-  function savedTheme() {
-    try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; }
-  }
-
-  function applyTheme(theme, animate) {
-    if (animate && !reduceMotion.matches) {
-      root.classList.add('theme-switching');
-      setTimeout(function () { root.classList.remove('theme-switching'); }, 400);
-    }
-    root.setAttribute('data-theme', theme);
-    document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
-      m.setAttribute('content', theme === 'dark' ? '#0B1F3B' : '#FFFFFF');
-    });
-    themeButtons.forEach(function (b) { b.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false'); });
-  }
-
-  if (!root.hasAttribute('data-theme')) root.setAttribute('data-theme', systemDark.matches ? 'dark' : 'light');
-  applyTheme(currentTheme(), false);
-  themeButtons.forEach(function (b) {
-    b.addEventListener('click', function () {
-      var next = currentTheme() === 'dark' ? 'light' : 'dark';
-      applyTheme(next, true);
-      try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* private mode: applies to this page only */ }
-    });
-  });
-  systemDark.addEventListener('change', function (e) {
-    if (!savedTheme()) applyTheme(e.matches ? 'dark' : 'light', true);
-  });
-
-  /* ------------------------------------------------------------------
-     1. Soft header shadow once the page scrolls (divider is always visible)
+     1. Header hairline once the page scrolls
      ------------------------------------------------------------------ */
   var header = document.querySelector('header');
-  var HEADER_SHADOW = 'shadow-[0_8px_24px_-18px_rgb(0_0_0/0.35)]';
   function updateHeader() {
     if (!header) return;
-    header.classList.toggle(HEADER_SHADOW, window.scrollY > 8 || isMenuOpen());
+    var scrolled = window.scrollY > 8 || isMenuOpen();
+    header.classList.toggle('border-jp-ivory/10', scrolled);
+    header.classList.toggle('border-transparent', !scrolled);
   }
   window.addEventListener('scroll', updateHeader, { passive: true });
 
@@ -172,23 +128,14 @@
   }
 
   /* ------------------------------------------------------------------
-     4. Ambient ribbon motion: slow silk-like drift + pointer parallax.
-        Home page: the "full" layout covers the entire hero. Inner pages use
-        the "side" layout (static). The light sweep along the edges is pure
-        CSS. Off for reduced motion; paused off-screen or in a hidden tab.
+     4. Ambient hero ribbon: slow silk-like drift + pointer parallax.
+        (The light sweep along the edges is pure CSS.) Off for reduced
+        motion; paused when off-screen or when the tab is hidden.
      ------------------------------------------------------------------ */
-  // Must match src/components/brand/ribbonGeometry.ts on the react-source branch.
-  var LAYOUTS = {
-    full: [
-      { edge: [[-100, 980], [520, 860], [860, 260], [1700, 60]], inner: [[320, 980], [860, 900], [1180, 520], [1700, 430]], lines: 56, amp: 60, phase: 0 },
-      { edge: [[620, 980], [1020, 860], [1260, 700], [1700, 610]], inner: [[920, 980], [1220, 940], [1420, 860], [1700, 840]], lines: 32, amp: 42, phase: 2.1 },
-      { edge: [[-100, 330], [300, 140], [720, 190], [1250, -60]], inner: [[-100, 520], [380, 300], [820, 280], [1450, -60]], lines: 28, amp: 40, phase: 4.2 },
-    ],
-    side: [
-      { edge: [[40, 960], [380, 760], [430, 300], [960, -40]], inner: [[330, 960], [560, 800], [640, 560], [960, 420]], lines: 48, amp: 42, phase: 0 },
-      { edge: [[400, 960], [600, 820], [690, 650], [960, 560]], inner: [[620, 960], [740, 880], [820, 820], [960, 790]], lines: 28, amp: 30, phase: 2.1 },
-    ],
-  };
+  var RIBBONS = [
+    { edge: [[40, 960], [380, 760], [430, 300], [960, -40]], inner: [[330, 960], [560, 800], [640, 560], [960, 420]], lines: 48, amp: 42, phase: 0 },
+    { edge: [[400, 960], [600, 820], [690, 650], [960, 560]], inner: [[620, 960], [740, 880], [820, 820], [960, 790]], lines: 28, amp: 30, phase: 2.1 },
+  ];
   var FLOW_PERIOD_S = 18;
 
   function lerp(a, b, t) { return a + (b - a) * t; }
@@ -215,7 +162,6 @@
   }
 
   function startRibbon(svg) {
-    var RIBBONS = LAYOUTS[svg.getAttribute('data-layout')] || LAYOUTS.side;
     var OVERSCAN = 1.06, MORPH_MS = 33, PX = 18, PY = 12;
     var finePointer = window.matchMedia('(pointer: fine)');
     var parts = RIBBONS.map(function (_, i) {
@@ -349,13 +295,13 @@
       var existing = document.getElementById(errId);
       if (existing) existing.remove();
       var described = (input.getAttribute('aria-describedby') || '').split(' ').filter(function (id) { return id && id !== errId; });
-      input.classList.toggle('border-danger', !!msg);
-      input.classList.toggle('border-field', !msg);
+      input.classList.toggle('border-jp-error', !!msg);
+      input.classList.toggle('border-jp-slate/80', !msg);
       if (msg) {
         input.setAttribute('aria-invalid', 'true');
         var p = document.createElement('p');
         p.id = errId;
-        p.className = 'mt-2 text-sm font-medium text-danger';
+        p.className = 'mt-2 text-sm font-medium text-jp-error';
         p.textContent = msg;
         input.insertAdjacentElement('afterend', p);
         described.push(errId);
@@ -376,17 +322,17 @@
       box.tabIndex = -1;
       box.setAttribute('role', 'alert');
       box.setAttribute('aria-labelledby', 'contact-error-title');
-      box.className = 'rounded-r-lg border-l-2 border-danger bg-surface p-5';
+      box.className = 'border-l-2 border-jp-error bg-jp-white p-5';
       var title = document.createElement('p');
       title.id = 'contact-error-title';
-      title.className = 'font-medium text-fg';
+      title.className = 'font-medium text-jp-ink';
       title.textContent = 'Please fix ' + (keys.length === 1 ? 'the following' : 'these ' + keys.length) + ' before continuing:';
       var ul = document.createElement('ul');
       ul.className = 'mt-2 list-disc space-y-1 pl-5 text-sm';
       keys.forEach(function (n) {
         var li = document.createElement('li');
         var a = document.createElement('a');
-        a.className = 'link text-danger';
+        a.className = 'link text-jp-error';
         a.href = '#contact-' + n;
         a.textContent = errors[n];
         a.addEventListener('click', function (e) { e.preventDefault(); field(n).focus(); });
@@ -406,7 +352,7 @@
     }
 
     function emailLink() {
-      return '<a class="link text-fg" href="mailto:' + EMAIL + '">' + EMAIL + '</a>';
+      return '<a class="link text-jp-navy" href="mailto:' + EMAIL + '">' + EMAIL + '</a>';
     }
 
     // Clear a field's error as soon as it is edited.
@@ -449,7 +395,7 @@
       if (!endpoint) {
         window.location.href = mailtoHref(v);
         showStatus(
-          '<p class="rounded-r-lg border-l-2 border-fg bg-surface p-5 text-muted">Your email app should now open with your message ready to send. If nothing happened, please email ' +
+          '<p class="border-l-2 border-jp-navy bg-jp-white p-5 text-jp-slate">Your email app should now open with your message ready to send. If nothing happened, please email ' +
             emailLink() + ' directly.</p>',
           true,
         );
@@ -480,10 +426,10 @@
           var done = document.createElement('div');
           done.tabIndex = -1;
           done.setAttribute('role', 'status');
-          done.className = 'rounded-xl border border-line bg-raised p-8 sm:p-10';
+          done.className = 'border border-jp-border bg-jp-white p-8 sm:p-10';
           done.innerHTML =
-            '<h2 class="text-h3 text-fg">Thank you — your enquiry has been received.</h2>' +
-            '<p class="mt-4 text-muted">We will reply to the email address you provided. If your enquiry is urgent, you can also email ' +
+            '<h2 class="text-h3 text-jp-navy">Thank you — your enquiry has been received.</h2>' +
+            '<p class="mt-4 text-jp-slate">We will reply to the email address you provided. If your enquiry is urgent, you can also email ' +
             emailLink() + '.</p>';
           form.replaceWith(done);
           done.focus();
@@ -493,7 +439,7 @@
           submit.disabled = false;
           submitLabel.textContent = 'Send Enquiry';
           showStatus(
-            '<p role="alert" class="rounded-r-lg border-l-2 border-danger bg-surface p-5 text-fg">Sorry — your enquiry could not be sent. Please try again, or email ' +
+            '<p role="alert" class="border-l-2 border-jp-error bg-jp-white p-5 text-jp-ink">Sorry — your enquiry could not be sent. Please try again, or email ' +
               emailLink() + ' directly.</p>',
             true,
           );
