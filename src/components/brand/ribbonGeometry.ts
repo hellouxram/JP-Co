@@ -1,51 +1,72 @@
 /**
- * Geometry for the decorative "flowing ribbon" motif from the approved banner.
- * Each ribbon is a family of cubic curves interpolated between a bright leading
- * edge and a softer inner edge, which produces the fine silk-like line texture.
+ * Geometry for the hero's decorative motif: a few fine gold hairlines sweeping up the
+ * right-hand side, echoing the flowing ribbon of the approved banner art without filled
+ * or hatched areas. Each "ribbon" is a pair of guide curves (a leading edge and an inner
+ * edge); hairlines are drawn at chosen positions between them.
  * Pure functions — no React — so the shape can be unit-tested or pre-rendered.
  */
 
 type Pt = readonly [number, number];
 type Cubic = readonly [Pt, Pt, Pt, Pt];
 
+export type Hairline = {
+  /** Position between the leading edge (0) and the inner edge (1). */
+  t: number;
+  width: number;
+  opacity: number;
+  /** The leading line of each ribbon gets a soft glow, the intro draw and the light sweep. */
+  primary?: boolean;
+};
+
 export type RibbonSpec = {
   edge: Cubic;
   inner: Cubic;
-  lines: number;
+  lines: Hairline[];
 };
 
 export const RIBBON_VIEWBOX = { width: 900, height: 900 } as const;
 
+/** Lines stay right of the headline on desktop and below the buttons on mobile. */
 export const ribbonSpecs: RibbonSpec[] = [
   {
     edge: [
-      [40, 960],
-      [380, 760],
-      [430, 300],
-      [960, -40],
+      [180, 960],
+      [560, 860],
+      [690, 430],
+      [960, 170],
     ],
     inner: [
-      [330, 960],
-      [560, 800],
-      [640, 560],
-      [960, 420],
+      [520, 960],
+      [760, 880],
+      [840, 640],
+      [960, 520],
     ],
-    lines: 48,
+    lines: [
+      { t: 0, width: 1.6, opacity: 1, primary: true },
+      { t: 0.07, width: 0.8, opacity: 0.55 },
+      { t: 0.2, width: 0.8, opacity: 0.4 },
+      { t: 0.42, width: 0.7, opacity: 0.28 },
+      { t: 0.75, width: 0.7, opacity: 0.18 },
+    ],
   },
   {
     edge: [
-      [400, 960],
-      [600, 820],
-      [690, 650],
-      [960, 560],
+      [480, 960],
+      [700, 880],
+      [780, 720],
+      [960, 640],
     ],
     inner: [
-      [620, 960],
-      [740, 880],
-      [820, 820],
-      [960, 790],
+      [700, 960],
+      [820, 920],
+      [880, 860],
+      [960, 830],
     ],
-    lines: 28,
+    lines: [
+      { t: 0, width: 1.3, opacity: 0.9, primary: true },
+      { t: 0.25, width: 0.7, opacity: 0.35 },
+      { t: 0.6, width: 0.7, opacity: 0.2 },
+    ],
   },
 ];
 
@@ -61,34 +82,29 @@ function lerpCubic(a: Cubic, b: Cubic, t: number): Cubic {
   return [lerpPt(a[0], b[0], t), lerpPt(a[1], b[1], t), lerpPt(a[2], b[2], t), lerpPt(a[3], b[3], t)];
 }
 
-/**
- * Closed shape between the leading edge and a curve `depth` of the way to the inner edge.
- * depth = 1 gives the full ribbon body; small values give the bright "sheen" band.
- */
-export function bodyPath(spec: RibbonSpec, depth = 1): string {
-  const e = spec.edge;
-  const i = lerpCubic(spec.edge, spec.inner, depth);
-  return `${cubicPath(e)} L${fmt(i[3])} C${fmt(i[2])} ${fmt(i[1])} ${fmt(i[0])} Z`;
+/** Path for a hairline at position `t` between the ribbon's two guide curves. */
+export function hairlinePath(spec: Pick<RibbonSpec, 'edge' | 'inner'>, t: number): string {
+  return cubicPath(lerpCubic(spec.edge, spec.inner, t));
 }
 
 /* ------------------------------------------------------------------
    Ambient motion: a slow, looping "silk in a draught" drift.
-   Endpoints stay fixed off-canvas so the ribbon never detaches from the
-   corner; only the inner control points move. The inner edge lags the
-   leading edge, so the ribbon gently widens, narrows and twists.
+   Endpoints stay fixed off-canvas; only the inner control points move.
+   The inner guide lags the leading edge, so the lines gently fan out,
+   close up and twist.
    ------------------------------------------------------------------ */
 
 /** One full cycle of the drift, in seconds. Long and slow by design. */
 export const FLOW_PERIOD_S = 18;
 
 const FLOW = [
-  { amp: 42, phase: 0 },
-  { amp: 30, phase: 2.1 },
+  { amp: 34, phase: 0 },
+  { amp: 24, phase: 2.1 },
 ];
 
 const offset = (p: Pt, dx: number, dy: number): Pt => [p[0] + dx, p[1] + dy];
 
-/** Returns the ribbon's geometry at `time` seconds into the ambient loop (t = 0 → the static shape). */
+/** Guide curves at `time` seconds into the ambient loop (t = 0 → the static shape). */
 export function flowSpec(spec: RibbonSpec, index: number, time: number): RibbonSpec {
   const { amp: A, phase } = FLOW[index % FLOW.length];
   const w = (2 * Math.PI) / FLOW_PERIOD_S;
@@ -114,15 +130,4 @@ export function flowSpec(spec: RibbonSpec, index: number, time: number): RibbonS
       offset(i[3], 0, A * 0.7 * s(1, phase + 2 + lag)),
     ],
   };
-}
-
-/** Interpolated strands. `t` (0 = leading edge, 1 = inner edge) drives opacity. */
-export function strandPaths(spec: RibbonSpec): { d: string; t: number }[] {
-  const out: { d: string; t: number }[] = [];
-  for (let n = 0; n <= spec.lines; n++) {
-    // Ease the spacing so strands bunch near the bright edge, like folded silk.
-    const t = Math.pow(n / spec.lines, 1.6);
-    out.push({ d: cubicPath(lerpCubic(spec.edge, spec.inner, t)), t });
-  }
-  return out;
 }
