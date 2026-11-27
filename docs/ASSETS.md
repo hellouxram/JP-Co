@@ -6,7 +6,8 @@
 |---|---|---|
 | `brand-source/linkedin_banner_final_1584x396.png` | Final approved LinkedIn banner, extracted unmodified from *JP_Co_Brand_Guidelines.docx* (v2.0) | Reference only (and LinkedIn cover). Not used as a website header or hero. |
 | `brand-source/email_signature_ram_1200x300.png` | Founder email signature, extracted unmodified from the guidelines | Reference only. Not used on the website. |
-| `site/assets/brand/jp-co-lockup-on-dark.{webp,png}` (672 × 158) | Crop of the lockup (monogram, divider, wordmark, descriptor) from the final banner, with the baked navy background removed | Header and footer logo, on navy only |
+| `site/assets/brand/jp-co-lockup-dark.{webp,png}` (523 × 158) | Lockup (gold monogram, divider, ivory wordmark with gold period) cropped from `brand-source/banner_dark_1512x256.png` (kit v3), baked navy background removed | Header in dark theme; footer in both themes |
+| `site/assets/brand/jp-co-lockup-light.{webp,png}` (526 × 166) | Same lockup with navy wordmark, cropped from `brand-source/banner_light_1512x256.png` (kit v3), baked ivory background removed | Header in light theme |
 | `site/assets/brand/jp-monogram-gold.{webp,png}` (162 × 158) | Crop of the gold JP monogram from the final banner, background removed | About page founder panel |
 | `brand-source/jp-co-lockup-baked-reference.png` | Same crop with its original background left in place | Reference for checking the derived files |
 | `site/favicon-32.png`, `site/apple-touch-icon.png` | Monogram on a `#0B1F3B` tile | Browser and home-screen icons |
@@ -22,7 +23,7 @@ The logo files were cropped from the final banner at its native resolution. They
 
 ## Replacing the files
 
-1. Export the new transparent lockup as WebP and PNG, keep the filenames above, and put them in `site/assets/brand/`.
+1. Export the new transparent lockups (light and dark) as WebP and PNG, keep the filenames above, and put them in `site/assets/brand/`.
 2. If the aspect ratio changes, update the `width` and `height` attributes on the logo `<img>` tags in every page, so the browser reserves the right space and the layout doesn't shift as images load.
-3. Use the lockup only on navy surfaces. A light-background (navy wordmark) version has not been approved yet.
+3. Use `jp-co-lockup-dark` only on navy surfaces and `jp-co-lockup-light` only on white or ivory surfaces.
 4. The hero background is an inline SVG ribbon in `site/index.html`, animated by `site/js/site.js`.

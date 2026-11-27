@@ -41,7 +41,14 @@ This site uses only details the founder supplied in the brand brief (v2.0, 27 No
 - [ ] Compress the final vector-derived exports (WebP/AVIF) and keep each `<img>` tag's `width` and `height` in sync with the new files.
 - [ ] Check there is no layout shift (CLS) while fonts and logos load.
 
-## 7. Manual QA
+## 7. Light and dark themes
+- [ ] Approve the light-theme lockup (gold monogram + navy wordmark) and the dark-theme lockup. Both are background-removed crops of the v3 banners (see `docs/ASSETS.md`), not vector masters.
+- [ ] Approve the accessible small-text gold `#8C6826` used in place of `#A47C38` for light-mode text (see README).
+- [ ] Check both themes on every page: header, hero ribbon, cards, form inputs, select dropdown, error states, success message, mobile menu, footer.
+- [ ] Switch the OS between light and dark with no saved choice and confirm the site follows. Then click the toggle, reload, and confirm the choice persists.
+- [ ] Confirm there's no flash of the wrong theme on a slow connection (Chrome DevTools → Network throttling).
+
+## 8. Manual QA
 - [ ] Test responsive layouts at 320, 375, 768, 1024, 1280 and 1920 px wide.
 - [ ] Test in Safari (iOS and macOS), Chrome (Android and desktop), Firefox and Edge.
 - [ ] Do a keyboard-only pass: skip link, nav, mobile menu (open, Tab cycling, Escape), all buttons, the form and its error summary.
