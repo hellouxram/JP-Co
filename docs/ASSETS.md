@@ -26,3 +26,17 @@ The logo files were cropped from the final banner at its native resolution. They
 2. If the aspect ratio changes, update the `width` and `height` attributes on the logo `<img>` tags in every page, so the browser reserves the right space and the layout doesn't shift as images load.
 3. Use the lockup only on navy surfaces. A light-background (navy wordmark) version has not been approved yet.
 4. The hero background is an inline SVG ribbon in `site/index.html`, animated by `site/js/site.js`.
+
+## Update, 28 Nov 2026: final logo kit
+
+All brand images on the site are now generated from the founder's final logo kit (Desktop/JP&Co):
+
+| Site file | Made from | How |
+|---|---|---|
+| `assets/brand/jp-co-lockup-on-dark.(png/webp)` | `JP & Co. Logo_light.png` | Trimmed; navy wordmark and divider recoloured to ivory `#F8F5EB` for navy surfaces. 643×176 |
+| `assets/brand/jp-co-lockup-on-light.(png/webp)` | `JP & Co. Logo_light.png` | Trimmed, original colours, for ivory/white surfaces. 643×176 |
+| `assets/brand/jp-monogram-gold.(png/webp)` | `JP & Co. Icon_light.png` | Trimmed transparent gold monogram. 339×320 |
+| `favicon.ico`, `favicon-32.png`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png` | `Fav.png` | Resized |
+| `og-image-1200x630.png` | `JP & Co. Luxury Tech Banner.png` | Scaled to 1200 wide on a blurred extension of itself |
+
+The kit is still raster (PNG). A vector master (SVG) is still recommended for print and very large sizes.

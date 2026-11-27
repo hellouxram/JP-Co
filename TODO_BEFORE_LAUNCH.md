@@ -18,6 +18,8 @@ This site uses only details the founder supplied in the brand brief (v2.0, 27 No
 - [ ] Review all marketing copy for claims you can support. The site currently has no testimonials, client logos, statistics, team members, street address or years in operation. Keep it that way until each item is verified.
 
 ## 3. Brand assets
+
+On 28 Nov 2026 the site's logos, favicons, app icons and share image were replaced with exports from the final logo kit (see `docs/ASSETS.md`). A light-background lockup now exists (`jp-co-lockup-on-light`).
 - [ ] Commission a **professionally redrawn vector master** (SVG/AI/PDF) of the JP monogram and the JP & Co. lockup. The current logo files are background-removed crops of the approved LinkedIn banner (see `docs/ASSETS.md`).
 - [ ] Get an approved **light-background lockup** (navy wordmark with gold monogram) if you ever need the logo on ivory. Until then the site only places the logo on navy.
 - [ ] Replace `site/favicon-32.png` and `site/apple-touch-icon.png` with exports from the vector master, and add a 512 px icon for a web manifest if you want one.
