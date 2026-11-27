@@ -22,10 +22,15 @@ export default function HomePage() {
         aria-labelledby="hero-title"
         className="surface-dark relative isolate overflow-hidden lg:flex lg:min-h-[min(54rem,calc(100svh_-_var(--header-height)))] lg:items-center"
       >
-        {/* Ribbon: below the copy on small screens (no overlap), right-hand side on desktop. */}
+        {/* Ribbon. Small screens: full-bleed behind the hero, faded in from transparent at the top so it
+            blends into the navy (no visible box edge) and stays clear of the copy. Desktop: right-hand side. */}
         <div
           aria-hidden="true"
-          className="absolute inset-x-0 bottom-0 -z-10 h-72 overflow-hidden sm:h-80 lg:inset-y-0 lg:left-auto lg:right-0 lg:h-auto lg:w-[58%]"
+          className={
+            'absolute inset-0 -z-10 overflow-hidden ' +
+            '[mask-image:linear-gradient(to_bottom,transparent_45%,black_85%)] ' +
+            'lg:left-auto lg:w-[58%] lg:[mask-image:none]'
+          }
         >
           {heroBackground ? (
             <img
@@ -42,7 +47,7 @@ export default function HomePage() {
           <div className="absolute inset-0 hidden bg-gradient-to-r from-jp-navy via-jp-navy/20 to-transparent lg:block" />
         </div>
 
-        <div className="container-site w-full pb-80 pt-16 sm:pb-96 sm:pt-24 lg:py-28">
+        <div className="container-site w-full pb-72 pt-16 sm:pb-80 sm:pt-24 lg:py-28">
           <div className="max-w-3xl lg:max-w-[46rem]">
             <Eyebrow tone="dark" className="mb-8 motion-safe:animate-fade-up">
               AI · Product Design · Engineering
