@@ -75,7 +75,8 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col gap-3 border-t border-jp-ivory/10 pt-8 text-sm text-jp-ivory/70 sm:flex-row sm:items-center sm:justify-between">
-          <p>
+          {/* Year comes from the build-time render; suppress the warning if it differs at hydration. */}
+          <p suppressHydrationWarning>
             © {year} {site.name} All rights reserved.
           </p>
           <p>

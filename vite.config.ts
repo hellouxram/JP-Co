@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react()],
   build: {
     target: 'es2020',
@@ -9,5 +9,7 @@ export default defineConfig({
     assetsDir: 'static',
     // Brand PNGs in /public are copied as-is; only bundled assets are hashed.
     assetsInlineLimit: 0,
+    // The SSR bundle (dist-ssr/) is only used at build time to pre-render pages.
+    copyPublicDir: !isSsrBuild,
   },
-});
+}));

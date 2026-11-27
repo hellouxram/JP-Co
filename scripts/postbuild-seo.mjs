@@ -1,10 +1,11 @@
 /**
- * Post-build SEO step (runs after `vite build`).
+ * Post-build SEO step (runs after the client build and the SSR build of src/entry-server.tsx).
  *
- * 1. Writes a per-route copy of index.html (dist/services/index.html, …) with that page's
- *    <title>, description, Open Graph and Twitter tags baked in, so crawlers and link-preview
- *    bots that don't run JavaScript still see the right metadata. It also means deep links work
- *    on any static host without rewrite rules.
+ * 1. Pre-renders every route to static HTML (full page content inside #root) and writes a
+ *    per-route copy of index.html (dist/services/index.html, …) with that page's <title>,
+ *    description, Open Graph and Twitter tags baked in. Crawlers and link-preview bots see the
+ *    complete page without running JavaScript; the browser then hydrates it with React.
+ *    It also means deep links work on any static host without rewrite rules.
  * 2. Writes dist/404.html (noindex) for static hosts that serve it for unknown paths.
  * 3. Writes robots.txt. Only when the domain is verified (VITE_SITE_URL_VERIFIED=true) does it
  *    add canonical links, absolute og:url / og:image, a Sitemap line and sitemap.xml.
@@ -12,6 +13,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { pathToFileURL } from 'node:url';
 import { loadEnv } from 'vite';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -22,6 +24,25 @@ const verified = env.VITE_SITE_URL_VERIFIED === 'true';
 const siteUrl = (env.VITE_SITE_URL || 'https://www.jpandcotech.com').replace(/\/+$/, '');
 const meta = JSON.parse(await readFile(path.join(root, 'src/config/routes-meta.json'), 'utf8'));
 const template = await readFile(path.join(dist, 'index.html'), 'utf8');
+
+// Server bundle produced by `vite build --ssr src/entry-server.tsx --outDir dist-ssr`.
+process.env.NODE_ENV = 'production';
+const { render: renderApp } = await import(pathToFileURL(path.join(root, 'dist-ssr', 'entry-server.js')).href);
+const ROOT_EMPTY = '<div id="root"></div>';
+if (!template.includes(ROOT_EMPTY)) throw new Error('postbuild-seo: empty <div id="root"></div> not found in index.html');
+const inGithubActions = env.GITHUB_ACTIONS === 'true';
+const stripTags = (h) => h.replace(/<!-- -->/g, '').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&#x27;/g, "'").trim();
+
+/** Server-renders a URL and sanity-checks the result so a broken pre-render fails the build. */
+function prerender(url) {
+  const appHtml = renderApp(url);
+  const h1 = appHtml.match(/<h1[^>]*>([\s\S]*?)<\/h1>/);
+  if (!h1) throw new Error(`postbuild-seo: pre-rendered ${url} has no <h1>`);
+  const summary = `${url} → ${Math.round(appHtml.length / 1024)} KB, h1: "${stripTags(h1[1])}"`;
+  console.log(`  ssr  ${summary}`);
+  if (inGithubActions) console.log(`::notice title=Pre-rendered page::${summary}`);
+  return appHtml;
+}
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
@@ -51,8 +72,9 @@ function structuredData() {
   return `    <script type="application/ld+json">${json}</script>\n`;
 }
 
-function render({ path: routePath, title, description }, { noindex = false } = {}) {
-  let html = template.replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(title)}</title>`);
+function render({ path: routePath, title, description }, { noindex = false, appHtml = '' } = {}) {
+  let html = template.replace(ROOT_EMPTY, () => `<div id="root">${appHtml}</div>`);
+  html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(title)}</title>`);
   html = setMeta(html, 'name', 'description', description);
   html = setMeta(html, 'property', 'og:title', title);
   html = setMeta(html, 'property', 'og:description', description);
@@ -79,11 +101,14 @@ function render({ path: routePath, title, description }, { noindex = false } = {
 for (const route of meta.routes) {
   const out = route.path === '/' ? path.join(dist, 'index.html') : path.join(dist, route.path.slice(1), 'index.html');
   await mkdir(path.dirname(out), { recursive: true });
-  await writeFile(out, render(route));
+  await writeFile(out, render(route, { appHtml: prerender(route.path) }));
   console.log(`  seo  ${route.path.padEnd(10)} → ${path.relative(root, out)}`);
 }
 
-await writeFile(path.join(dist, '404.html'), render({ path: null, ...meta.notFound }, { noindex: true }));
+await writeFile(
+  path.join(dist, '404.html'),
+  render({ path: null, ...meta.notFound }, { noindex: true, appHtml: prerender('/404') }),
+);
 console.log('  seo  404        → dist/404.html (noindex)');
 
 const robots = ['User-agent: *', 'Allow: /', ...(verified ? ['', `Sitemap: ${siteUrl}/sitemap.xml`] : []), ''].join('\n');
