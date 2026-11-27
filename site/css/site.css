@@ -4,3 +4,4 @@
 .py-8{padding-top:2rem;padding-bottom:2rem}.pt-section{padding-top:clamp(4.5rem,3rem + 6vw,9rem)}@media (min-width:640px){.sm\:grid-cols-\[10rem_1fr\]{grid-template-columns:10rem 1fr}.sm\:gap-6{gap:1.5rem}}
 /* Privacy Policy page */
 .mt-5{margin-top:1.25rem}.pt-4{padding-top:1rem}.first\:pt-0:first-child{padding-top:0}@media (min-width:1024px){.lg\:sticky{position:sticky}.lg\:top-28{top:7rem}}
+@media (min-width:1024px){.lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}}
