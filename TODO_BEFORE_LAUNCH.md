@@ -26,7 +26,9 @@ This site uses only details the founder supplied in the brand brief (v2.0, 27 No
 - [ ] If the original asset kit (`logo_usage_dark_reference.png`, `hero_background_2400x1050.png` and so on) is used, check each file against the final banner before adding it.
 
 ## 4. Contact form
-- [ ] Choose a submission backend, such as Formspree, Basin, Getform or your own serverless function, that accepts a JSON POST and returns a 2xx response on success.
+
+Connected to Formspree (`https://formspree.io/f/xqpqoabj`) on 28 Nov 2026. Still to do: a live test submission, allowed-domain and spam settings in Formspree, and the final privacy notice.
+- [x] Choose a submission backend, such as Formspree, Basin, Getform or your own serverless function, that accepts a JSON POST and returns a 2xx response on success.
 - [ ] Paste the endpoint into `data-endpoint=""` on the `<form>` in `site/contact/index.html`, then commit and push.
 - [ ] Turn on spam protection at the provider (the honeypot is only a first line of defence). Consider rate limiting or a privacy-friendly CAPTCHA.
 - [ ] Send test submissions. Confirm delivery to the inbox, check the error state (for example, with the endpoint temporarily broken) and confirm the success message appears only after real delivery.

@@ -268,7 +268,12 @@
       submit.removeAttribute('aria-describedby');
       submitLabel.textContent = 'Send Enquiry';
       var privacy = form.querySelector('[data-privacy-extra]');
-      if (privacy) privacy.remove();
+      if (privacy) {
+        // Say who processes the submission once a sending service is connected.
+        privacy.textContent = /formspree\.io/.test(endpoint)
+          ? 'Submissions are delivered to us by Formspree, our form-handling service, and are not used for marketing.'
+          : 'Submissions are delivered to us by our form-handling service and are not used for marketing.';
+      }
     }
 
     function values() {

@@ -47,7 +47,9 @@ Brand colours are navy `#0B1F3B`, gold `#D4B483`, ivory `#F8F5EB`, slate `#5B647
 
 ## Contact form
 
-By default the form isn't connected to a sending service. It checks the fields, then opens the visitor's email app with the message addressed to ram@jpandcotech.com.
+The form is connected to **Formspree** (form ID `xqpqoabj`, endpoint `https://formspree.io/f/xqpqoabj`), which emails each enquiry to ram@jpandcotech.com. Manage submissions, spam settings and allowed domains in the Formspree dashboard. To switch services, change `data-endpoint` and `action` on the `<form>` in `site/contact/index.html`.
+
+With no endpoint set, the form isn't connected to a sending service. It checks the fields, then opens the visitor's email app with the message addressed to ram@jpandcotech.com.
 
 To connect it to Formspree (or any service that accepts a JSON POST):
 
