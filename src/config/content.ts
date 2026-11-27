@@ -206,7 +206,7 @@ export const companyFaqs: Faq[] = [
   {
     question: 'What is JP & Co.?',
     answer:
-      'JP & Co. is a founder-led technology company led by Lakshmi Narayana (Ram), CEO & Founder. It works with businesses on AI and workflow automation, product design and UX, SaaS and software engineering, and product strategy.',
+      'JP & Co. is a founder-led technology company based in Hyderabad, India, led by Lakshmi Narayana (Ram), CEO & Founder. It works with businesses on AI and workflow automation, product design and UX, SaaS and software engineering, and product strategy.',
   },
   {
     question: 'What services does JP & Co. offer?',
@@ -216,6 +216,10 @@ export const companyFaqs: Faq[] = [
   {
     question: 'Who founded JP & Co.?',
     answer: 'JP & Co. was founded by Lakshmi Narayana (Ram), who leads the company as CEO & Founder.',
+  },
+  {
+    question: 'Where is JP & Co. based?',
+    answer: 'JP & Co. is based in Hyderabad, Telangana, India.',
   },
   {
     question: 'Does JP & Co. build its own products?',

@@ -84,6 +84,7 @@ export default function AboutPage() {
             <dl className="border-t border-jp-border">
               {[
                 ['Company', `${site.name} (${site.descriptor})`],
+                ['Based in', `${site.location.city}, ${site.location.region}, ${site.location.country}`],
                 ['Founder', `${site.founder.name}, ${site.founder.title}`],
                 ['Services', services.map((s) => s.title).join(' · ')],
                 ['Direction', 'Client work today; proprietary B2B SaaS products over time'],

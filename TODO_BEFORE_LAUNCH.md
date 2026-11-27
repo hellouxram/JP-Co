@@ -11,7 +11,7 @@ This site uses only details the founder supplied in the brand brief (v2.0, 27 No
 - [ ] Click every `mailto:`, `tel:` and website link on desktop and mobile.
 
 ## 2. Legal and company
-- [ ] Confirm the final legal entity name and whether it has been incorporated (MCA). The site deliberately shows only "JP & Co." with the descriptor "Technology Company" and no legal suffix. Add the registered name, CIN and registered address to the footer only once they exist.
+- [ ] Confirm the final legal entity name and whether it has been incorporated (MCA). The site deliberately shows only "JP & Co." with the descriptor "Technology Company" and no legal suffix. Add the registered name, CIN and registered address to the footer only once they exist. The site currently states the city only (Hyderabad, India), in `site.location`.
 - [ ] Get trademark clearance for "JP & Co." and the JP monogram in the relevant classes. Avoid any presentation that could be confused with financial institutions.
 - [ ] Write a full **Privacy Policy** covering the contact form, email handling, hosting and any analytics. India's DPDP Act 2023 is likely to apply. Link it from the footer and the form's privacy notice. The current notice is a short interim statement.
 - [ ] Add **Terms of Use** if needed.

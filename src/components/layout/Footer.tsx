@@ -80,7 +80,7 @@ export default function Footer() {
             © {year} {site.name} All rights reserved.
           </p>
           <p>
-            {site.name} · {site.descriptor}
+            {site.name} · {site.descriptor} · {site.location.label}
           </p>
         </div>
       </div>

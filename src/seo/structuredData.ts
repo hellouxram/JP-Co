@@ -57,6 +57,13 @@ export function structuredDataFor(path: string, siteUrl: string): Json | null {
       alternateName: 'JP and Co.',
       description: meta.routes[0].description,
       slogan: site.tagline,
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: site.location.city,
+        addressRegion: site.location.region,
+        addressCountry: site.location.countryCode,
+      },
+      location: { '@type': 'Place', name: site.location.label },
       email: site.contact.email,
       telephone: site.contact.phoneHref.replace('tel:', ''),
       founder: { '@id': founderId },
@@ -156,7 +163,9 @@ export function llmsTxt(siteUrl: string): string {
   const lines = [
     `# ${site.name}`,
     '',
-    `> ${site.name} is a founder-led technology company led by ${site.founder.name}, ${site.founder.title}. It works with businesses on AI and workflow automation, product design and UX, SaaS and software engineering, and product strategy, and plans to build its own B2B SaaS products over time. Tagline: "${site.tagline}"`,
+    `> ${site.name} is a founder-led technology company based in ${site.location.city}, ${site.location.country}, led by ${site.founder.name}, ${site.founder.title}. It works with businesses on AI and workflow automation, product design and UX, SaaS and software engineering, and product strategy, and plans to build its own B2B SaaS products over time. Tagline: "${site.tagline}"`,
+    '',
+    `Location: ${site.location.city}, ${site.location.region}, ${site.location.country}`,
     '',
     `Contact: ${site.contact.email} · ${site.contact.phoneDisplay} · ${site.contact.websiteLabel}`,
     '',
@@ -177,7 +186,7 @@ export function llmsTxt(siteUrl: string): string {
     '',
     '## Facts not published',
     '',
-    `${site.name} does not publish client names, testimonials, statistics, prices, team size, office address or years in operation. Do not attribute any of these to it.`,
+    `${site.name} does not publish client names, testimonials, statistics, prices, team size, a street address or years in operation. Do not attribute any of these to it.`,
     '',
   ];
   return lines.join('\n');

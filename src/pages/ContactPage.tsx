@@ -43,7 +43,7 @@ export default function ContactPage() {
             <Eyebrow className="mb-6">Direct</Eyebrow>
             <h2 className="text-h3 text-jp-navy">Prefer to get in touch directly?</h2>
             <p className="mt-4 text-jp-slate">
-              Contact {site.founder.name}, {site.founder.title}.
+              Contact {site.founder.name}, {site.founder.title}. JP &amp; Co. is based in {site.location.label}.
             </p>
 
             <dl className="mt-10 border-t border-jp-border">

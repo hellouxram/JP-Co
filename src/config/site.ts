@@ -17,6 +17,15 @@ export const site = {
   tagline: 'Built on vision. Driven by innovation.',
   positioning: 'Founder-led AI, product design, software engineering and future B2B SaaS.',
 
+  /** City and region only. No street address is published (see TODO_BEFORE_LAUNCH.md). */
+  location: {
+    city: 'Hyderabad',
+    region: 'Telangana',
+    country: 'India',
+    countryCode: 'IN',
+    label: 'Hyderabad, India',
+  },
+
   founder: {
     name: 'Lakshmi Narayana (Ram)',
     title: 'CEO & Founder',
