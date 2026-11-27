@@ -172,14 +172,23 @@
   }
 
   /* ------------------------------------------------------------------
-     4. Ambient hero lines: slow drift of the gold hairlines + pointer
-        parallax. (The glint along the leading lines is pure CSS.) Off for
-        reduced motion; paused when off-screen or when the tab is hidden.
+     4. Ambient ribbon motion: slow silk-like drift + pointer parallax.
+        Home page: the "full" layout covers the entire hero. Inner pages use
+        the "side" layout (static). The light sweep along the edges is pure
+        CSS. Off for reduced motion; paused off-screen or in a hidden tab.
      ------------------------------------------------------------------ */
-  var RIBBONS = [
-    { edge: [[180, 960], [560, 860], [690, 430], [960, 170]], inner: [[520, 960], [760, 880], [840, 640], [960, 520]], amp: 34, phase: 0 },
-    { edge: [[480, 960], [700, 880], [780, 720], [960, 640]], inner: [[700, 960], [820, 920], [880, 860], [960, 830]], amp: 24, phase: 2.1 },
-  ];
+  // Must match src/components/brand/ribbonGeometry.ts on the react-source branch.
+  var LAYOUTS = {
+    full: [
+      { edge: [[-100, 980], [520, 860], [860, 260], [1700, 60]], inner: [[320, 980], [860, 900], [1180, 520], [1700, 430]], lines: 56, amp: 60, phase: 0 },
+      { edge: [[620, 980], [1020, 860], [1260, 700], [1700, 610]], inner: [[920, 980], [1220, 940], [1420, 860], [1700, 840]], lines: 32, amp: 42, phase: 2.1 },
+      { edge: [[-100, 330], [300, 140], [720, 190], [1250, -60]], inner: [[-100, 520], [380, 300], [820, 280], [1450, -60]], lines: 28, amp: 40, phase: 4.2 },
+    ],
+    side: [
+      { edge: [[40, 960], [380, 760], [430, 300], [960, -40]], inner: [[330, 960], [560, 800], [640, 560], [960, 420]], lines: 48, amp: 42, phase: 0 },
+      { edge: [[400, 960], [600, 820], [690, 650], [960, 560]], inner: [[620, 960], [740, 880], [820, 820], [960, 790]], lines: 28, amp: 30, phase: 2.1 },
+    ],
+  };
   var FLOW_PERIOD_S = 18;
 
   function lerp(a, b, t) { return a + (b - a) * t; }
@@ -187,6 +196,10 @@
   function lerpCubic(a, b, t) { return [lerpPt(a[0], b[0], t), lerpPt(a[1], b[1], t), lerpPt(a[2], b[2], t), lerpPt(a[3], b[3], t)]; }
   function fmt(p) { return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }
   function cubicPath(c) { return 'M' + fmt(c[0]) + ' C' + fmt(c[1]) + ' ' + fmt(c[2]) + ' ' + fmt(c[3]); }
+  function bodyPath(edge, inner, depth) {
+    var i = lerpCubic(edge, inner, depth);
+    return cubicPath(edge) + ' L' + fmt(i[3]) + ' C' + fmt(i[2]) + ' ' + fmt(i[1]) + ' ' + fmt(i[0]) + ' Z';
+  }
   function offset(p, dx, dy) { return [p[0] + dx, p[1] + dy]; }
 
   /** Ribbon geometry at `time` seconds into the loop (time 0 = the static shape in the HTML). */
@@ -202,13 +215,12 @@
   }
 
   function startRibbon(svg) {
+    var RIBBONS = LAYOUTS[svg.getAttribute('data-layout')] || LAYOUTS.side;
     var OVERSCAN = 1.06, MORPH_MS = 33, PX = 18, PY = 12;
     var finePointer = window.matchMedia('(pointer: fine)');
-    // Every animated path has data-rb (which ribbon) and data-t (position between its guide curves).
     var parts = RIBBONS.map(function (_, i) {
-      return Array.prototype.map.call(svg.querySelectorAll('path[data-rb="' + i + '"]'), function (el) {
-        return { el: el, t: Number(el.getAttribute('data-t') || 0) };
-      });
+      function q(part) { return svg.querySelectorAll('[data-rb="' + i + '"][data-part="' + part + '"]'); }
+      return { body: q('body')[0], sheen: q('sheen')[0], strands: q('strand'), edges: q('edge') };
     });
     var raf = 0, running = false, inView = true, elapsed = 0, lastTick = 0, lastMorph = -Infinity;
     var pointer = { x: 0, y: 0 }, pos = { x: 0, y: 0 }, room = { x: PX, y: PY };
@@ -220,11 +232,15 @@
     }
     function apply(t) {
       RIBBONS.forEach(function (r, i) {
-        var g = flow(r, t), cache = {};
-        parts[i].forEach(function (p) {
-          if (!(p.t in cache)) cache[p.t] = cubicPath(lerpCubic(g.edge, g.inner, p.t));
-          p.el.setAttribute('d', cache[p.t]);
-        });
+        var g = flow(r, t), p = parts[i];
+        if (p.body) p.body.setAttribute('d', bodyPath(g.edge, g.inner, 1));
+        if (p.sheen) p.sheen.setAttribute('d', bodyPath(g.edge, g.inner, 0.16));
+        for (var n = 0; n < p.strands.length; n++) {
+          var tt = Math.pow(n / r.lines, 1.6);
+          p.strands[n].setAttribute('d', cubicPath(lerpCubic(g.edge, g.inner, tt)));
+        }
+        var d = cubicPath(g.edge);
+        for (var k = 0; k < p.edges.length; k++) p.edges[k].setAttribute('d', d);
       });
     }
     function frame(now) {
