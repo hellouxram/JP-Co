@@ -20,11 +20,18 @@ export default function HomePage() {
       {/* ───────────── Hero ───────────── */}
       <section
         aria-labelledby="hero-title"
-        className="surface-hero relative isolate overflow-hidden border-b border-line lg:flex lg:min-h-[min(54rem,calc(100svh_-_var(--header-height)))] lg:items-center"
+        className="surface-dark relative isolate overflow-hidden lg:flex lg:min-h-[min(54rem,calc(100svh_-_var(--header-height)))] lg:items-center"
       >
-        {/* Motion graphic covering the entire hero: flowing silk ribbons drift slowly behind the copy.
-            A theme-coloured scrim keeps the text side calm and readable (AA) in both themes. */}
-        <div aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden">
+        {/* Ribbon. Small screens: full-bleed behind the hero, faded in from transparent at the top so it
+            blends into the navy (no visible box edge) and stays clear of the copy. Desktop: right-hand side. */}
+        <div
+          aria-hidden="true"
+          className={
+            'absolute inset-0 -z-10 overflow-hidden ' +
+            '[mask-image:linear-gradient(to_bottom,transparent_45%,black_85%)] ' +
+            'lg:left-auto lg:w-[58%] lg:[mask-image:none]'
+          }
+        >
           {heroBackground ? (
             <img
               src={heroBackground.src}
@@ -32,28 +39,28 @@ export default function HomePage() {
               height={heroBackground.height}
               alt=""
               decoding="async"
-              className="h-full w-full object-cover motion-safe:animate-fade-in"
+              className="h-full w-full object-cover object-right motion-safe:animate-fade-in"
             />
           ) : (
-            <Ribbon className="h-full w-full" layout="full" ambient />
+            <Ribbon className="h-full w-full" ambient />
           )}
-          <div className="absolute inset-0 bg-gradient-to-b from-hero-fade/75 via-hero-fade/55 via-60% to-hero-fade/10 lg:bg-gradient-to-r lg:from-hero-fade/85 lg:via-hero-fade/45 lg:via-40% lg:to-transparent lg:to-75%" />
+          <div className="absolute inset-0 hidden bg-gradient-to-r from-jp-navy via-jp-navy/20 to-transparent lg:block" />
         </div>
 
-        <div className="container-site w-full pb-40 pt-16 sm:pb-48 sm:pt-24 lg:py-28">
+        <div className="container-site w-full pb-72 pt-16 sm:pb-80 sm:pt-24 lg:py-28">
           <div className="max-w-3xl lg:max-w-[46rem]">
-            <Eyebrow className="mb-8 motion-safe:animate-fade-up">
+            <Eyebrow tone="dark" className="mb-8 motion-safe:animate-fade-up">
               AI · Product Design · Engineering
             </Eyebrow>
             <h1
               id="hero-title"
-              className="text-display text-fg motion-safe:animate-fade-up"
+              className="text-display text-jp-ivory motion-safe:animate-fade-up"
               style={{ animationDelay: '80ms' }}
             >
               Technology built with purpose.
             </h1>
             <p
-              className="mt-8 max-w-[36rem] text-lead text-muted motion-safe:animate-fade-up"
+              className="mt-8 max-w-[36rem] text-lead text-jp-ivory/80 motion-safe:animate-fade-up"
               style={{ animationDelay: '160ms' }}
             >
               We design intelligent products, streamline complex workflows, and build software that helps businesses
@@ -63,10 +70,10 @@ export default function HomePage() {
               className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center motion-safe:animate-fade-up"
               style={{ animationDelay: '240ms' }}
             >
-              <ButtonLink to="/contact" variant="primary" arrow>
+              <ButtonLink to="/contact" variant="gold" arrow>
                 Discuss a Project
               </ButtonLink>
-              <ButtonLink to="/services" variant="outline">
+              <ButtonLink to="/services" variant="outline-light">
                 Explore Services
               </ButtonLink>
             </div>
@@ -74,34 +81,34 @@ export default function HomePage() {
               className="mt-16 flex items-center gap-5 motion-safe:animate-fade-up lg:mt-24"
               style={{ animationDelay: '320ms' }}
             >
-              <span aria-hidden="true" className="h-10 w-px bg-deco/70" />
-              <p className="font-serif text-lg italic text-muted sm:text-xl">{site.tagline}</p>
+              <span aria-hidden="true" className="h-10 w-px bg-jp-gold/70" />
+              <p className="font-serif text-lg italic text-jp-ivory/80 sm:text-xl">{site.tagline}</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* ───────────── Positioning ───────────── */}
-      <section aria-labelledby="intro-title" className="bg-surface py-section">
+      <section aria-labelledby="intro-title" className="bg-jp-ivory py-section">
         <div className="container-site grid gap-10 lg:grid-cols-12 lg:gap-16">
           <Reveal className="lg:col-span-6">
             <Eyebrow className="mb-6">Who we are</Eyebrow>
-            <h2 id="intro-title" className="text-h2 text-fg">
+            <h2 id="intro-title" className="text-h2 text-jp-navy">
               A founder-led technology company.
             </h2>
           </Reveal>
           <Reveal className="lg:col-span-6 lg:pt-14" delay={120}>
-            <p className="text-lead text-fg">
+            <p className="text-lead text-jp-ink">
               JP &amp; Co. works across AI, product design and software engineering. We take on focused projects where
               clear thinking and careful engineering make the difference.
             </p>
-            <p className="mt-6 text-muted">
+            <p className="mt-6 text-jp-slate">
               Over time, we intend to build our own B2B SaaS products, shaped by the problems we encounter in that
               work.
             </p>
             <Link
               to="/about"
-              className="mt-8 inline-flex min-h-[2.75rem] items-center gap-2 font-medium text-fg underline decoration-fg/30 decoration-1 underline-offset-[0.3em] transition-colors hover:decoration-fg"
+              className="mt-8 inline-flex min-h-[2.75rem] items-center gap-2 font-medium text-jp-navy underline decoration-jp-navy/30 decoration-1 underline-offset-[0.3em] transition-colors hover:decoration-jp-navy"
             >
               About JP &amp; Co.
               <ArrowRightIcon className="h-4 w-4" />
@@ -111,7 +118,7 @@ export default function HomePage() {
       </section>
 
       {/* ───────────── Services preview ───────────── */}
-      <section aria-labelledby="services-title" className="border-y border-line bg-page py-section">
+      <section aria-labelledby="services-title" className="border-y border-jp-border bg-jp-white py-section">
         <div className="container-site">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <Reveal>
@@ -123,13 +130,13 @@ export default function HomePage() {
               />
             </Reveal>
             <Reveal delay={100}>
-              <ButtonLink to="/services" variant="outline" arrow>
+              <ButtonLink to="/services" variant="outline-dark" arrow>
                 Explore Services
               </ButtonLink>
             </Reveal>
           </div>
 
-          <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:gap-6 xl:grid-cols-4">
+          <ul className="mt-14 grid gap-px border border-jp-border bg-jp-border sm:grid-cols-2 xl:grid-cols-4">
             {services.map((s, i) => (
               <Reveal as="li" key={s.id} delay={i * 80}>
                 <ServiceCard service={s} />
@@ -140,7 +147,7 @@ export default function HomePage() {
       </section>
 
       {/* ───────────── Approach strip ───────────── */}
-      <section aria-labelledby="approach-title" className="bg-surface py-section">
+      <section aria-labelledby="approach-title" className="bg-jp-ivory py-section">
         <div className="container-site">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <Reveal>
@@ -154,7 +161,7 @@ export default function HomePage() {
             <Reveal delay={100}>
               <Link
                 to="/approach"
-                className="inline-flex min-h-[2.75rem] items-center gap-2 font-medium text-fg underline decoration-fg/30 decoration-1 underline-offset-[0.3em] transition-colors hover:decoration-fg"
+                className="inline-flex min-h-[2.75rem] items-center gap-2 font-medium text-jp-navy underline decoration-jp-navy/30 decoration-1 underline-offset-[0.3em] transition-colors hover:decoration-jp-navy"
               >
                 See how we work
                 <ArrowRightIcon className="h-4 w-4" />
@@ -170,7 +177,7 @@ export default function HomePage() {
         title={
           <>
             Have a complex problem worth solving?{' '}
-            <span className="block italic text-muted">Let’s build the right solution.</span>
+            <span className="block italic text-jp-slate">Let’s build the right solution.</span>
           </>
         }
         primary={{ label: 'Discuss a Project', to: '/contact' }}

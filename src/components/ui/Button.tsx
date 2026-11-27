@@ -4,10 +4,14 @@ import { cn } from '../../lib/cn';
 import { ArrowRightIcon } from './Icons';
 
 export type ButtonVariant =
-  /** Themed primary: navy fill + white text (light), champagne fill + deep-navy text (dark). */
-  | 'primary'
-  /** Themed hairline outline for secondary actions. */
-  | 'outline';
+  /** Gold fill, navy text — primary action on navy surfaces (8.4:1). */
+  | 'gold'
+  /** Navy fill, ivory text — primary action on light surfaces (15.1:1). */
+  | 'navy'
+  /** Hairline outline for secondary actions on navy surfaces. */
+  | 'outline-light'
+  /** Hairline outline for secondary actions on light surfaces. */
+  | 'outline-dark';
 
 export type ButtonSize = 'md' | 'sm';
 
@@ -17,13 +21,15 @@ const sizes: Record<ButtonSize, string> = {
 };
 
 const base =
-  'group inline-flex items-center justify-center gap-3 rounded-full text-[0.9375rem] font-medium tracking-[0.01em] ' +
+  'group inline-flex items-center justify-center gap-3 text-[0.9375rem] font-medium tracking-[0.01em] ' +
   'transition-[background-color,color,border-color,transform] duration-300 ease-out-soft ' +
   'disabled:cursor-not-allowed disabled:opacity-60';
 
 const variants: Record<ButtonVariant, string> = {
-  primary: 'bg-btn text-btn-fg shadow-sm hover:bg-btn-hover',
-  outline: 'border border-fg/30 text-fg hover:border-accent hover:text-accent-ink',
+  gold: 'bg-jp-gold text-jp-navy hover:bg-jp-ivory',
+  navy: 'bg-jp-navy text-jp-ivory hover:bg-jp-ink',
+  'outline-light': 'border border-jp-ivory/40 text-jp-ivory hover:border-jp-gold hover:text-jp-gold',
+  'outline-dark': 'border border-jp-navy/60 text-jp-navy hover:border-jp-navy hover:bg-jp-navy hover:text-jp-ivory',
 };
 
 type CommonProps = {
@@ -48,7 +54,7 @@ function Inner({ arrow, children }: { arrow?: boolean; children: ReactNode }) {
 }
 
 /** Internal navigation styled as a button. */
-export function ButtonLink({ variant = 'primary', size = 'md', arrow, className, children, ...rest }: CommonProps & Omit<LinkProps, 'className' | 'children'>) {
+export function ButtonLink({ variant = 'gold', size = 'md', arrow, className, children, ...rest }: CommonProps & Omit<LinkProps, 'className' | 'children'>) {
   return (
     <Link className={cn(base, sizes[size], variants[variant], className)} {...rest}>
       <Inner arrow={arrow}>{children}</Inner>
@@ -58,7 +64,7 @@ export function ButtonLink({ variant = 'primary', size = 'md', arrow, className,
 
 /** External / protocol link (mailto:, tel:) styled as a button. */
 export function ButtonAnchor({
-  variant = 'primary',
+  variant = 'gold',
   size = 'md',
   arrow,
   className,
@@ -73,7 +79,7 @@ export function ButtonAnchor({
 }
 
 export function Button({
-  variant = 'primary',
+  variant = 'navy',
   size = 'md',
   arrow,
   className,

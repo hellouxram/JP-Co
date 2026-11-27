@@ -16,7 +16,7 @@ export default function ApproachPage() {
         intro="A clear process with tangible outputs at every step. We would rather set realistic expectations early than promise speed we cannot responsibly deliver."
       />
 
-      <section aria-labelledby="steps-title" className="bg-surface py-section">
+      <section aria-labelledby="steps-title" className="bg-jp-ivory py-section">
         <div className="container-site">
           <Reveal>
             <SectionHeading
@@ -27,17 +27,17 @@ export default function ApproachPage() {
             />
           </Reveal>
 
-          <ol className="mt-16 border-t border-line">
+          <ol className="mt-16 border-t border-jp-border">
             {processSteps.map((step) => (
-              <li key={step.title} className="border-b border-line">
+              <li key={step.title} className="border-b border-jp-border">
                 <Reveal className="grid gap-8 py-12 lg:grid-cols-12 lg:gap-16 lg:py-16">
                   <div className="lg:col-span-4">
-                    <p className="font-sans text-sm font-medium tracking-[0.18em] text-muted">
+                    <p className="font-sans text-sm font-medium tracking-[0.18em] text-jp-slate">
                       <span className="sr-only">Step </span>
                       {step.number}
                     </p>
-                    <h3 className="mt-4 font-serif text-h2 text-fg">{step.title}</h3>
-                    <p className="mt-4 text-lead text-fg">{step.summary}</p>
+                    <h3 className="mt-4 font-serif text-h2 text-jp-navy">{step.title}</h3>
+                    <p className="mt-4 text-lead text-jp-ink">{step.summary}</p>
                   </div>
 
                   <div className="grid gap-10 sm:grid-cols-2 lg:col-span-8">
@@ -45,8 +45,8 @@ export default function ApproachPage() {
                       <Eyebrow className="mb-5">What happens</Eyebrow>
                       <ul className="space-y-3">
                         {step.activities.map((a) => (
-                          <li key={a} className="flex gap-3 text-fg">
-                            <span aria-hidden="true" className="mt-[0.8em] h-px w-4 shrink-0 bg-icon" />
+                          <li key={a} className="flex gap-3 text-jp-ink">
+                            <span aria-hidden="true" className="mt-[0.8em] h-px w-4 shrink-0 bg-jp-navy" />
                             <span>{a}</span>
                           </li>
                         ))}
@@ -56,16 +56,16 @@ export default function ApproachPage() {
                       <Eyebrow className="mb-5">Outputs</Eyebrow>
                       <ul className="space-y-3">
                         {step.outputs.map((o) => (
-                          <li key={o} className="flex gap-3 text-fg">
-                            <span aria-hidden="true" className="mt-[0.8em] h-px w-4 shrink-0 bg-icon" />
+                          <li key={o} className="flex gap-3 text-jp-ink">
+                            <span aria-hidden="true" className="mt-[0.8em] h-px w-4 shrink-0 bg-jp-navy" />
                             <span>{o}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
-                    <div className="card border-l-2 border-l-deco p-6 sm:col-span-2">
-                      <p className="eyebrow mb-2 text-accent-ink">What to expect</p>
-                      <p className="text-muted">{step.expectation}</p>
+                    <div className="border-l-2 border-jp-gold bg-jp-white p-6 sm:col-span-2">
+                      <p className="eyebrow mb-2 text-jp-slate">What to expect</p>
+                      <p className="text-jp-slate">{step.expectation}</p>
                     </div>
                   </div>
                 </Reveal>
@@ -75,17 +75,17 @@ export default function ApproachPage() {
         </div>
       </section>
 
-      <section aria-labelledby="principles-title" className="surface-brand py-section">
+      <section aria-labelledby="principles-title" className="surface-dark py-section">
         <div className="container-site">
           <Reveal>
             <SectionHeading
               id="principles-title"
-              tone="brand"
+              tone="dark"
               eyebrow="Working principles"
               title="How we keep projects honest."
             />
           </Reveal>
-          <ul className="mt-14 grid gap-px overflow-hidden rounded-xl border border-jp-ivory/10 bg-jp-ivory/10 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-14 grid gap-px border border-jp-ivory/10 bg-jp-ivory/10 sm:grid-cols-2 lg:grid-cols-4">
             {principles.map((p, i) => (
               <Reveal as="li" key={p.title} delay={i * 80} className="bg-jp-navy p-8 sm:p-10">
                 <span aria-hidden="true" className="mb-8 block h-8 w-px bg-jp-gold" />

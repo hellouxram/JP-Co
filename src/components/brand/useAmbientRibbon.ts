@@ -1,5 +1,5 @@
 import { useEffect, type RefObject } from 'react';
-import { RIBBON_LAYOUTS, bodyPath, cubicPath, flowSpec, strandPaths, type RibbonLayout } from './ribbonGeometry';
+import { bodyPath, cubicPath, flowSpec, ribbonSpecs, strandPaths } from './ribbonGeometry';
 
 /** Geometry updates are capped at ~30fps: the drift is slow, so this is visually smooth and halves the work. */
 const MORPH_INTERVAL_MS = 33;
@@ -35,8 +35,6 @@ export function useAmbientRibbon(svgRef: RefObject<SVGSVGElement>, enabled: bool
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const finePointer = window.matchMedia('(pointer: fine)');
 
-    const layout = RIBBON_LAYOUTS[(svg.getAttribute('data-layout') as RibbonLayout) || 'side'] ?? RIBBON_LAYOUTS.side;
-    const ribbonSpecs = layout.specs;
     const parts: Parts[] = ribbonSpecs.map((_, i) => {
       const q = (part: string) => svg.querySelectorAll<SVGPathElement>(`[data-rb="${i}"][data-part="${part}"]`);
       return {
@@ -64,7 +62,7 @@ export function useAmbientRibbon(svgRef: RefObject<SVGSVGElement>, enabled: bool
 
     const applyGeometry = (timeS: number) => {
       ribbonSpecs.forEach((spec, i) => {
-        const s = flowSpec(spec, layout.flow[i], timeS);
+        const s = flowSpec(spec, i, timeS);
         const p = parts[i];
         p.body?.setAttribute('d', bodyPath(s));
         p.sheen?.setAttribute('d', bodyPath(s, 0.16));

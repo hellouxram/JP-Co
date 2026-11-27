@@ -20,13 +20,13 @@ export default function ServicesPage() {
       />
 
       {/* In-page index */}
-      <nav aria-label="Services on this page" className="sticky top-[var(--header-height)] z-40 border-b border-line bg-page/90 backdrop-blur-md">
+      <nav aria-label="Services on this page" className="border-b border-jp-border bg-jp-white">
         <ul className="container-site flex gap-x-8 gap-y-1 overflow-x-auto py-3 [scrollbar-width:none]">
           {services.map((s) => (
             <li key={s.id} className="shrink-0">
               <a
                 href={`#${s.id}`}
-                className="inline-flex min-h-[2.75rem] items-center gap-3 text-[0.9375rem] text-muted transition-colors hover:text-fg"
+                className="inline-flex min-h-[2.75rem] items-center gap-3 text-[0.9375rem] text-jp-slate transition-colors hover:text-jp-navy"
               >
                 <span className="text-xs font-medium tracking-[0.18em]">{s.number}</span>
                 {s.title}
@@ -36,24 +36,24 @@ export default function ServicesPage() {
         </ul>
       </nav>
 
-      <div className="bg-surface">
+      <div className="bg-jp-ivory">
         {services.map((s, i) => (
           <section
             key={s.id}
             id={s.id}
             aria-labelledby={`${s.id}-title`}
-            className={cn('scroll-mt-14 py-section', i > 0 && 'border-t border-line')}
+            className={cn('py-section', i > 0 && 'border-t border-jp-border')}
           >
             <div className="container-site grid gap-12 lg:grid-cols-12 lg:gap-16">
               <Reveal className="lg:col-span-5">
-                <p className="font-sans text-sm font-medium tracking-[0.18em] text-muted">{s.number}</p>
-                <h2 id={`${s.id}-title`} className="mt-6 text-h2 text-fg">
+                <p className="font-sans text-sm font-medium tracking-[0.18em] text-jp-slate">{s.number}</p>
+                <h2 id={`${s.id}-title`} className="mt-6 text-h2 text-jp-navy">
                   {s.title}
                 </h2>
-                <p className="mt-6 text-lead text-fg">{s.intro}</p>
+                <p className="mt-6 text-lead text-jp-ink">{s.intro}</p>
                 <Link
                   to={`/contact?service=${s.id}`}
-                  className="mt-8 inline-flex min-h-[2.75rem] items-center gap-2 font-medium text-fg underline decoration-fg/30 decoration-1 underline-offset-[0.3em] transition-colors hover:decoration-fg"
+                  className="mt-8 inline-flex min-h-[2.75rem] items-center gap-2 font-medium text-jp-navy underline decoration-jp-navy/30 decoration-1 underline-offset-[0.3em] transition-colors hover:decoration-jp-navy"
                 >
                   Discuss this service<span className="sr-only">: {s.title}</span>
                   <ArrowRightIcon className="h-4 w-4" />
@@ -65,8 +65,8 @@ export default function ServicesPage() {
                   <Eyebrow className="mb-5">What it can include</Eyebrow>
                   <ul className="space-y-4">
                     {s.includes.map((item) => (
-                      <li key={item} className="flex gap-3 text-fg">
-                        <CheckIcon className="mt-[0.35em] h-4 w-4 shrink-0 text-icon" />
+                      <li key={item} className="flex gap-3 text-jp-ink">
+                        <CheckIcon className="mt-[0.35em] h-4 w-4 shrink-0 text-jp-navy" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -76,8 +76,8 @@ export default function ServicesPage() {
                   <Eyebrow className="mb-5">What you receive</Eyebrow>
                   <ul className="space-y-4">
                     {s.outputs.map((item) => (
-                      <li key={item} className="flex gap-3 text-fg">
-                        <span aria-hidden="true" className="mt-[0.8em] h-px w-4 shrink-0 bg-icon" />
+                      <li key={item} className="flex gap-3 text-jp-ink">
+                        <span aria-hidden="true" className="mt-[0.8em] h-px w-4 shrink-0 bg-jp-navy" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -85,9 +85,9 @@ export default function ServicesPage() {
                 </div>
                 <aside
                   aria-label={`A note on ${s.title}`}
-                  className="card flex gap-4 border-l-2 border-l-deco p-6 text-muted sm:col-span-2"
+                  className="flex gap-4 border-l-2 border-jp-gold bg-jp-white p-6 text-jp-slate sm:col-span-2"
                 >
-                  <InfoIcon className="mt-[0.2em] h-5 w-5 shrink-0 text-icon" />
+                  <InfoIcon className="mt-[0.2em] h-5 w-5 shrink-0 text-jp-navy" />
                   <p>{s.note}</p>
                 </aside>
               </Reveal>
@@ -96,10 +96,10 @@ export default function ServicesPage() {
         ))}
       </div>
 
-      <section aria-labelledby="engagement-title" className="surface-brand py-section">
+      <section aria-labelledby="engagement-title" className="surface-dark py-section">
         <div className="container-site grid gap-10 lg:grid-cols-12 lg:gap-16">
           <Reveal className="lg:col-span-5">
-            <Eyebrow tone="brand" className="mb-6">
+            <Eyebrow tone="dark" className="mb-6">
               How engagements start
             </Eyebrow>
             <h2 id="engagement-title" className="text-h2 text-jp-ivory">

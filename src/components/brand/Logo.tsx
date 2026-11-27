@@ -1,10 +1,8 @@
 import { brandAssets } from '../../config/site';
 import { cn } from '../../lib/cn';
 
-type LockupAsset = (typeof brandAssets)['lockupDark'] | (typeof brandAssets)['lockupLight'];
-
 type LogoProps = {
-  /** Height utility (e.g. "h-9 lg:h-11"); width follows the artwork's aspect ratio (never stretched). */
+  /** Rendered height in CSS px; width follows the artwork's aspect ratio (never stretched). */
   className?: string;
   /** Eager-load for above-the-fold placements (header). */
   priority?: boolean;
@@ -12,21 +10,23 @@ type LogoProps = {
   decorative?: boolean;
 };
 
-function LockupImage({
-  asset,
-  className,
-  priority,
-  decorative,
-  wrapperClass,
-}: LogoProps & { asset: LockupAsset; wrapperClass?: string }) {
+/**
+ * Approved light-on-dark lockup: gold JP monogram, thin ivory divider, ivory
+ * "JP & Co." wordmark and "TECHNOLOGY COMPANY" descriptor.
+ *
+ * Only place this on navy surfaces. A light-background version has not been
+ * approved yet (see TODO_BEFORE_LAUNCH.md) — do not recolour with CSS filters.
+ */
+export function LogoLockup({ className, priority = false, decorative = false }: LogoProps) {
+  const a = brandAssets.lockupOnDark;
   return (
-    <picture className={wrapperClass}>
-      <source srcSet={asset.webp} type="image/webp" />
+    <picture>
+      <source srcSet={a.webp} type="image/webp" />
       <img
-        src={asset.png}
-        width={asset.width}
-        height={asset.height}
-        alt={decorative ? '' : asset.alt}
+        src={a.png}
+        width={a.width}
+        height={a.height}
+        alt={decorative ? '' : a.alt}
         loading={priority ? 'eager' : 'lazy'}
         decoding={priority ? 'sync' : 'async'}
         className={cn('block w-auto select-none', className ?? 'h-10')}
@@ -34,26 +34,6 @@ function LockupImage({
       />
     </picture>
   );
-}
-
-/**
- * Theme-aware primary lockup for the header: gold monogram + divider + wordmark.
- * Light theme → navy wordmark; dark theme → ivory wordmark. Switching is pure CSS
- * (.show-light / .show-dark), so it follows the theme without JavaScript.
- * Never recolour the artwork with CSS filters.
- */
-export function ThemedLogo(props: LogoProps) {
-  return (
-    <>
-      <LockupImage {...props} asset={brandAssets.lockupLight} wrapperClass="show-light" />
-      <LockupImage {...props} asset={brandAssets.lockupDark} wrapperClass="show-dark" />
-    </>
-  );
-}
-
-/** Ivory-wordmark lockup for always-navy brand zones (footer), in both themes. */
-export function LogoOnNavy(props: LogoProps) {
-  return <LockupImage {...props} asset={brandAssets.lockupDark} />;
 }
 
 /** Gold intertwined JP monogram, for compact placements on navy. */

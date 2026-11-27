@@ -2,8 +2,7 @@ import { useCallback, useEffect, useRef, useState, type MouseEvent } from 'react
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { navigation, site } from '../../config/site';
 import { cn } from '../../lib/cn';
-import { ThemedLogo } from '../brand/Logo';
-import ThemeToggle from '../ui/ThemeToggle';
+import { LogoLockup } from '../brand/Logo';
 import { ButtonLink } from '../ui/Button';
 import { CloseIcon, MenuIcon } from '../ui/Icons';
 
@@ -88,13 +87,13 @@ export default function Header() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 border-b border-line bg-header/95 text-fg backdrop-blur-md transition-shadow duration-300 supports-[backdrop-filter]:bg-header/85',
-        (scrolled || open) && 'shadow-[0_8px_24px_-18px_rgb(0_0_0/0.35)]',
+        'surface-dark sticky top-0 z-50 border-b transition-colors duration-300',
+        scrolled || open ? 'border-jp-ivory/10' : 'border-transparent',
       )}
     >
       <div className="container-site flex h-[var(--header-height)] items-center justify-between gap-6">
         <Link to="/" aria-label={`${site.name} — home`} className="-m-2 shrink-0 p-2">
-          <ThemedLogo priority decorative className="h-9 lg:h-11" />
+          <LogoLockup priority decorative className="h-9 lg:h-11" />
         </Link>
 
         <nav aria-label="Primary" className="hidden lg:block">
@@ -107,10 +106,10 @@ export default function Header() {
                   className={({ isActive }) =>
                     cn(
                       'relative inline-flex min-h-[2.75rem] items-center px-3 text-[0.9375rem] transition-colors duration-200 xl:px-4',
-                      'after:absolute after:inset-x-3 after:bottom-1.5 after:h-px after:origin-left after:bg-deco after:transition-transform after:duration-300 xl:after:inset-x-4',
+                      'after:absolute after:inset-x-3 after:bottom-1.5 after:h-px after:origin-left after:bg-jp-gold after:transition-transform after:duration-300 xl:after:inset-x-4',
                       isActive
-                        ? 'text-fg after:scale-x-100'
-                        : 'text-fg/75 after:scale-x-0 hover:text-fg hover:after:scale-x-100',
+                        ? 'text-jp-ivory after:scale-x-100'
+                        : 'text-jp-ivory/75 after:scale-x-0 hover:text-jp-ivory hover:after:scale-x-100',
                     )
                   }
                 >
@@ -121,15 +120,14 @@ export default function Header() {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-2 sm:gap-3">
-          <ThemeToggle />
-          <ButtonLink to="/contact" variant="primary" size="sm" className="hidden lg:inline-flex">
+        <div className="flex items-center gap-3">
+          <ButtonLink to="/contact" variant="gold" size="sm" className="hidden lg:inline-flex">
             Discuss a Project
           </ButtonLink>
           <button
             ref={toggleRef}
             type="button"
-            className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-fg lg:hidden"
+            className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-jp-ivory lg:hidden"
             aria-expanded={open}
             aria-controls={MENU_ID}
             aria-label={open ? 'Close menu' : 'Open menu'}
@@ -150,12 +148,12 @@ export default function Header() {
         onClick={(e: MouseEvent<HTMLDivElement>) => {
           if ((e.target as Element).closest('a')) close();
         }}
-        className="fixed inset-x-0 bottom-0 top-[var(--header-height)] overflow-y-auto border-t border-line bg-header text-fg lg:hidden"
+        className="surface-dark fixed inset-x-0 bottom-0 top-[var(--header-height)] overflow-y-auto border-t border-jp-ivory/10 lg:hidden"
       >
         <nav aria-label="Mobile" className="container-site flex min-h-full flex-col justify-between gap-12 py-10">
           <ul className="flex flex-col">
             {navigation.map((item, i) => (
-              <li key={item.to} className="border-b border-line">
+              <li key={item.to} className="border-b border-jp-ivory/10">
                 <NavLink
                   to={item.to}
                   end={item.to === '/'}
@@ -163,7 +161,7 @@ export default function Header() {
                   className={({ isActive }) =>
                     cn(
                       'flex min-h-[3.5rem] items-center justify-between py-4 font-serif text-3xl motion-safe:animate-fade-up',
-                      isActive ? 'text-accent-ink' : 'text-fg',
+                      isActive ? 'text-jp-gold' : 'text-jp-ivory',
                     )
                   }
                 >
@@ -173,10 +171,10 @@ export default function Header() {
             ))}
           </ul>
           <div className="space-y-6">
-            <ButtonLink to="/contact" variant="primary" arrow className="w-full">
+            <ButtonLink to="/contact" variant="gold" arrow className="w-full">
               Discuss a Project
             </ButtonLink>
-            <div className="space-y-2 text-muted">
+            <div className="space-y-2 text-jp-ivory/80">
               <p>
                 <a className="link inline-flex min-h-[2.75rem] items-center" href={site.contact.emailHref}>
                   {site.contact.email}

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { services } from '../../config/content';
 import { navigation, site } from '../../config/site';
-import { LogoOnNavy } from '../brand/Logo';
+import { LogoLockup } from '../brand/Logo';
 import { GlobeIcon, MailIcon, PhoneIcon } from '../ui/Icons';
 
 const linkCls =
@@ -10,15 +10,14 @@ const linkCls =
 export default function Footer() {
   const year = new Date().getFullYear();
 
-  // Deep-navy brand anchor in both themes.
   return (
-    <footer className="surface-brand relative overflow-hidden">
+    <footer className="surface-dark relative overflow-hidden">
       <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-jp-gold/60 to-transparent" />
       <div className="container-site py-16 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5">
             <Link to="/" aria-label={`${site.name} — home`} className="-m-2 inline-block p-2">
-              <LogoOnNavy decorative className="h-14 sm:h-16" />
+              <LogoLockup decorative className="h-14 sm:h-16" />
             </Link>
             <p className="mt-8 font-serif text-xl italic text-jp-ivory/90">{site.tagline}</p>
           </div>
