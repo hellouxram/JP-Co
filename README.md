@@ -37,6 +37,14 @@ Open the page's `index.html` and edit the text directly. Keep these in mind:
 
 Brand colours are navy `#0B1F3B`, gold `#D4B483`, ivory `#F8F5EB`, slate `#5B6470`, ink `#172337` and border `#D9DDE3`. Don't use gold for text on light backgrounds; it doesn't meet contrast requirements.
 
+## SEO, AEO and GEO
+
+- **Titles and descriptions:** each page's `<head>` has a keyword-led `<title>` (under 65 characters) and description (under 160). Keep the Open Graph and Twitter copies in step.
+- **Structured data:** each page has one `<script type="application/ld+json">` block: Organization (with Hyderabad address), WebSite, Person (founder), Service ×4, FAQPage (Home and Services), HowTo (Approach), AboutPage, ContactPage and BreadcrumbList. If you edit an FAQ answer or service text on a page, make the same edit in that page's JSON-LD.
+- **Answer-first content:** FAQ sections on Home and Services and the "At a glance" fact sheet on About give search engines and AI assistants complete answers they can quote. Only state facts you can stand behind.
+- **AI crawlers:** `robots.txt` names the main AI crawlers as allowed, and `llms.txt` is a plain-markdown summary of the company for AI assistants. Update `llms.txt` when services, FAQs or contact details change.
+- **Location:** the site states the city only (Hyderabad, Telangana, India) in the footer, About, Contact, the FAQ and the JSON-LD.
+
 ## Contact form
 
 By default the form isn't connected to a sending service. It checks the fields, then opens the visitor's email app with the message addressed to ram@jpandcotech.com.

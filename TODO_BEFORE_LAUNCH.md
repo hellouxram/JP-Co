@@ -15,7 +15,7 @@ This site uses only details the founder supplied in the brand brief (v2.0, 27 No
 - [ ] Get trademark clearance for "JP & Co." and the JP monogram in the relevant classes. Avoid any presentation that could be confused with financial institutions.
 - [ ] Write a full **Privacy Policy** covering the contact form, email handling, hosting and any analytics. India's DPDP Act 2023 is likely to apply. Link it from the footer and the form's privacy notice. The current notice is a short interim statement.
 - [ ] Add **Terms of Use** if needed.
-- [ ] Review all marketing copy for claims you can support. The site currently has no testimonials, client logos, statistics, team members, office address or years in operation. Keep it that way until each item is verified.
+- [ ] Review all marketing copy for claims you can support. The site currently has no testimonials, client logos, statistics, team members, street address or years in operation. Keep it that way until each item is verified.
 
 ## 3. Brand assets
 - [ ] Commission a **professionally redrawn vector master** (SVG/AI/PDF) of the JP monogram and the JP & Co. lockup. The current logo files are background-removed crops of the approved LinkedIn banner (see `docs/ASSETS.md`).

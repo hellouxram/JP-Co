@@ -1,0 +1,79 @@
+# JP & Co.
+
+> JP & Co. is a founder-led technology company based in Hyderabad, India, led by Lakshmi Narayana (Ram), CEO & Founder. It works with businesses on AI and workflow automation, product design and UX, SaaS and software engineering, and product strategy, and plans to build its own B2B SaaS products over time. Tagline: "Built on vision. Driven by innovation."
+
+Location: Hyderabad, Telangana, India
+
+Contact: ram@jpandcotech.com · 9573319095 · www.jpandcotech.com
+
+## Services
+
+- [AI & Workflow Automation](https://www.jpandcotech.com/services/#ai-workflow-automation): Map how work actually flows, then automate the repetitive parts — with AI where it helps and people kept in the loop where it matters. Includes: Business process mapping of current and proposed workflows; Identifying steps suited to rules-based automation, AI assistance, or neither; AI-assisted workflows such as document handling, triage, summarisation and data extraction, with human review where needed; Integrations between the tools your team already uses.
+- [Product Design & UX](https://www.jpandcotech.com/services/#product-design-ux): Audits, flows, prototypes and design systems that make products easier to understand, use and extend. Includes: UX audits of existing products and journeys; User flows, information architecture and wireframes; Interactive prototypes for testing ideas before they are built; Design systems: components, tokens and usage guidance.
+- [SaaS & Software Engineering](https://www.jpandcotech.com/services/#saas-software-engineering): MVPs, web applications and SaaS foundations built to be maintained — not just launched. Includes: MVP scoping and build for new products; Web applications and internal tools; SaaS foundations such as authentication, roles, admin and billing integration; APIs and integrations with third-party services.
+- [Product Strategy](https://www.jpandcotech.com/services/#product-strategy): Roadmaps and priorities grounded in what your users need and what your team can realistically deliver. Includes: Product discovery and problem definition; Product roadmapping and prioritisation; Requirement definition for upcoming work; Build-versus-buy and technical feasibility assessments.
+
+## How projects work
+
+- **Discover:** Understand the problem, the people involved and the constraints before proposing a solution. Discovery can be short for well-understood problems and longer for complex ones. Estimates are given after this step, not before it.
+- **Design:** Shape the solution — workflows, interfaces and architecture — and test it before committing to build. Designs often change after feedback. That is the point of this step — it is cheaper to change a design than finished software.
+- **Build:** Develop in small, reviewable increments so progress is visible and course corrections are cheap. Timelines depend on scope and complexity. If something changes, we will tell you early and agree how to adjust scope, time or budget.
+- **Improve:** Measure how the solution performs in real use and refine it based on evidence. Real-world use always reveals something new. Planning for a period of refinement leads to better outcomes than treating launch as the finish line.
+
+## Frequently asked questions
+
+### What is JP & Co.?
+
+JP & Co. is a founder-led technology company based in Hyderabad, India, led by Lakshmi Narayana (Ram), CEO & Founder. It works with businesses on AI and workflow automation, product design and UX, SaaS and software engineering, and product strategy.
+
+### What services does JP & Co. offer?
+
+JP & Co. offers four services: AI and workflow automation, product design and UX, SaaS and software engineering, and product strategy. They can be used together or on their own, depending on what the problem needs.
+
+### Who founded JP & Co.?
+
+JP & Co. was founded by Lakshmi Narayana (Ram), who leads the company as CEO & Founder.
+
+### Where is JP & Co. based?
+
+JP & Co. is based in Hyderabad, Telangana, India.
+
+### Does JP & Co. build its own products?
+
+Not yet. Today JP & Co. works with businesses on client projects. Over time it plans to build its own B2B SaaS products, shaped by the problems it sees in that work.
+
+### How do I start a project with JP & Co.?
+
+Every project starts with a scoping call. Email ram@jpandcotech.com, call 9573319095 or use the enquiry form on the Contact page. If it looks like a good fit, JP & Co. follows up with a written outline of scope and next steps.
+
+### How much does a project cost, and how long does it take?
+
+It depends on scope and complexity, so JP & Co. gives estimates after a discovery step, once the problem is properly understood, rather than before it. If scope changes during a project, you are told early and the adjustment to scope, time or budget is agreed together.
+
+### Should every business process use AI?
+
+No. Not every process benefits from AI. Part of the automation work is identifying where AI helps, where a simple rule or an integration is the better answer, and where no change is needed at all. Where AI is used, people stay in the loop for review.
+
+### What is an MVP and what does it include?
+
+An MVP (minimum viable product) is an intentionally narrow first version of a product that tests the core idea before more is invested. JP & Co. agrees in writing what is in and out of scope before building, and flags trade-offs as they come up.
+
+### Will we receive the source code and documentation?
+
+Yes. Engineering work is handed over with source code and technical documentation as agreed, plus a short list of known limitations and recommended next steps, so your team can understand and extend what was built.
+
+### Can JP & Co. work with the tools we already use?
+
+Yes. Automations are designed to fit your existing tools rather than replace them by default, and integrations between the tools your team already uses are part of the AI and workflow automation service.
+
+## Pages
+
+- [JP & Co. | AI Automation, Product Design & Software Engineering](https://www.jpandcotech.com/): Hyderabad-based technology company offering AI and workflow automation, product design and UX, SaaS and software engineering, and product strategy.
+- [AI Automation, UX Design & SaaS Development Services | JP & Co.](https://www.jpandcotech.com/services/): AI and workflow automation, product design and UX, SaaS and software engineering, and product strategy: what each engagement includes and delivers.
+- [How We Work: Discover, Design, Build, Improve | JP & Co.](https://www.jpandcotech.com/approach/): JP & Co.'s four-step process: Discover, Design, Build, Improve. Every step ends with an output you can review, and estimates come after discovery.
+- [About JP & Co. | Founder-Led Technology Company](https://www.jpandcotech.com/about/): JP & Co. is a founder-led technology company in Hyderabad, India, led by Lakshmi Narayana (Ram), CEO & Founder, across AI, design and software.
+- [Contact JP & Co. | Discuss an AI, Design or Software Project](https://www.jpandcotech.com/contact/): Start a project with JP & Co. in Hyderabad, India. Book a scoping call: email ram@jpandcotech.com, call 9573319095 or send an enquiry.
+
+## Facts not published
+
+JP & Co. does not publish client names, testimonials, statistics, prices, team size, a street address or years in operation. Do not attribute any of these to it.
