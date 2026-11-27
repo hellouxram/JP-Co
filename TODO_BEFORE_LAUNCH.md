@@ -5,7 +5,7 @@ This site uses only details the founder supplied in the brand brief (v2.0, 27 No
 ## 1. Domain and email
 - [ ] Confirm that **jpandcotech.com** is registered to the business and that you control its DNS.
 - [ ] Deploy the site and confirm that `https://www.jpandcotech.com` serves it over HTTPS. Decide whether the apex domain redirects to `www` or the other way round.
-- [ ] Only after the two steps above, set `VITE_SITE_URL_VERIFIED=true` and rebuild. This turns on canonical links, absolute OG URLs and `sitemap.xml`.
+- [x] Canonical links, absolute OG URLs and `sitemap.xml` are switched on (the domain is serving the site).
 - [ ] Confirm that the mailbox **ram@jpandcotech.com** exists and can receive mail. Send a test from Gmail and from Outlook. Set up SPF, DKIM and DMARC.
 - [ ] Confirm the phone number **9573319095** (tel link `+919573319095`) is correct and answered during business hours.
 - [ ] Click every `mailto:`, `tel:` and website link on desktop and mobile.
@@ -18,16 +18,16 @@ This site uses only details the founder supplied in the brand brief (v2.0, 27 No
 - [ ] Review all marketing copy for claims you can support. The site currently has no testimonials, client logos, statistics, team members, office address or years in operation. Keep it that way until each item is verified.
 
 ## 3. Brand assets
-- [ ] Commission a **professionally redrawn vector master** (SVG/AI/PDF) of the JP monogram and the JP & Co. lockup. The current logo files are background-removed crops of the approved LinkedIn banner (see `public/assets/README.md`).
+- [ ] Commission a **professionally redrawn vector master** (SVG/AI/PDF) of the JP monogram and the JP & Co. lockup. The current logo files are background-removed crops of the approved LinkedIn banner (see `docs/ASSETS.md`).
 - [ ] Get an approved **light-background lockup** (navy wordmark with gold monogram) if you ever need the logo on ivory. Until then the site only places the logo on navy.
-- [ ] Replace `favicon-32.png` and `apple-touch-icon.png` with exports from the vector master, and add a 512 px icon for a web manifest if you want one.
+- [ ] Replace `site/favicon-32.png` and `site/apple-touch-icon.png` with exports from the vector master, and add a 512 px icon for a web manifest if you want one.
 - [ ] Review `og-image-1200x630.png` against the final artwork. Share a page on LinkedIn, WhatsApp and X to check the preview.
 - [ ] Confirm usage rights or licensing for all imagery, including the banner's ribbon artwork.
 - [ ] If the original asset kit (`logo_usage_dark_reference.png`, `hero_background_2400x1050.png` and so on) is used, check each file against the final banner before adding it.
 
 ## 4. Contact form
 - [ ] Choose a submission backend, such as Formspree, Basin, Getform or your own serverless function, that accepts a JSON POST and returns a 2xx response on success.
-- [ ] Set `VITE_CONTACT_FORM_ENDPOINT` in the hosting environment and rebuild.
+- [ ] Paste the endpoint into `data-endpoint=""` on the `<form>` in `site/contact/index.html`, then commit and push.
 - [ ] Turn on spam protection at the provider (the honeypot is only a first line of defence). Consider rate limiting or a privacy-friendly CAPTCHA.
 - [ ] Send test submissions. Confirm delivery to the inbox, check the error state (for example, with the endpoint temporarily broken) and confirm the success message appears only after real delivery.
 - [ ] Update the form's privacy notice once the backend and retention policy are known.
@@ -38,7 +38,7 @@ This site uses only details the founder supplied in the brand brief (v2.0, 27 No
 
 ## 6. Performance and images
 - [ ] Run Lighthouse on the production build (mobile and desktop). Target 90+ for Performance, Accessibility, Best Practices and SEO.
-- [ ] Compress the final vector-derived exports (WebP/AVIF) and keep the declared `width` and `height` in `src/config/site.ts` in sync.
+- [ ] Compress the final vector-derived exports (WebP/AVIF) and keep each `<img>` tag's `width` and `height` in sync with the new files.
 - [ ] Check there is no layout shift (CLS) while fonts and logos load.
 
 ## 7. Manual QA
