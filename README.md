@@ -9,7 +9,8 @@ This is the website for **JP & Co.** (Technology Company), live at https://www.j
 ```
 site/                      ← everything in here is published
 ├─ index.html              Home
-├─ services/index.html     Services
+├─ services/index.html     Services hub
+├─ services/<slug>/        One page per service (AI automation, product design, SaaS engineering, product strategy)
 ├─ approach/index.html     Approach
 ├─ about/index.html        About
 ├─ contact/index.html      Contact (enquiry form)
